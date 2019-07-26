@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "CLI_DEV=true nodemon",
     "build": "tsc",
-    "prepare": "npm run-script build",
+    "preinstall": "npm run-script build",
     "prettier": "prettier \"bin/**/*.js\" \"src/**/*.ts\" --write"
   },
   "dependencies": {
