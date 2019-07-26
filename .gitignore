@@ -1,0 +1,11 @@
+logs
+*.log
+.DS_Store
+node_modules
+.idea
+.editorconfig
+.node-version
+.idea
+.editorconfig
+dist/*
+!dist/.keep
