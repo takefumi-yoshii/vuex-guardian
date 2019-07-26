@@ -1,6 +1,6 @@
 {
   "name": "vuex-guardian",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Vuex type definitions generator by Compiler API",
   "author": "takefumi-yoshii",
   "license": "MIT",
