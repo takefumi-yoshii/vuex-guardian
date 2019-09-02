@@ -26,22 +26,15 @@ function createPropertySignatures(node, fileInfo, wrapUtilityTypeName, variableD
         return getSignature(fileInfo, wrapUtilityTypeName, variableDeclarationName, identifier, constants);
     });
 }
-function createPropertySignaturesFromSourceFile(program, fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
-    var sourceFile = program.getSourceFile(fileInfo.filePath);
-    if (!sourceFile)
-        return;
+function createPropertySignaturesFromSourceFile(sourceFile, fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
     var typeDefinitions = sourceFile.getChildAt(0);
     return lodash_flatten_1.default(typeDefinitions
         .getChildren()
-        .filter(function (node) {
-        return ts.isVariableStatement(node);
-    })
+        .filter(ts.isVariableStatement)
         .filter(function (node) {
         return helpers_1.isExpectedIdentifierVariableStatement(node, variableDeclarationName);
     })
-        .map(function (node) {
-        return helpers_1.getVariableDeclarationFromVariableStatement(node);
-    })
+        .map(helpers_1.getVariableDeclarationFromVariableStatement)
         .map(function (node) {
         return createPropertySignatures(node, fileInfo, wrapUtilityTypeName, variableDeclarationName, constants);
     })
@@ -51,8 +44,8 @@ function createPropertySignaturesFromSourceFile(program, fileInfo, wrapUtilityTy
 }
 //_______________________________________________________
 //
-exports.createFlatInterfaceDeclaration = function (program, fileInfo, distTypeName, wrapUtilityTypeName, variableDeclarationName, constants) {
+exports.createFlatInterfaceDeclaration = function (sourceFile, fileInfo, distTypeName, wrapUtilityTypeName, variableDeclarationName, constants) {
     return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, [
-        ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.namespace), undefined, ts.createTypeLiteralNode(createPropertySignaturesFromSourceFile(program, fileInfo, wrapUtilityTypeName, variableDeclarationName, constants)), undefined)
+        ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.namespace), undefined, ts.createTypeLiteralNode(createPropertySignaturesFromSourceFile(sourceFile, fileInfo, wrapUtilityTypeName, variableDeclarationName, constants)), undefined)
     ]);
 };

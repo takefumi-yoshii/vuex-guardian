@@ -11,7 +11,7 @@ import { createLocalContext } from './createLocalContext'
 //_______________________________________________________
 //
 export const createModuleAst = (
-  program: ts.Program,
+  sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   constants: Constants
 ) => [
@@ -27,7 +27,7 @@ export const createModuleAst = (
       constants
     ),
     createFlatInterfaceDeclaration(
-      program,
+      sourceFile,
       fileInfo,
       constants.LOCAL_GETTERS,
       constants.RETURN_TYPE,
@@ -35,7 +35,7 @@ export const createModuleAst = (
       constants
     ),
     createFlatInterfaceDeclaration(
-      program,
+      sourceFile,
       fileInfo,
       constants.LOCAL_MUTATION_TYPES,
       constants.ARGUMENT_2,
@@ -43,7 +43,7 @@ export const createModuleAst = (
       constants
     ),
     createFlatInterfaceDeclaration(
-      program,
+      sourceFile,
       fileInfo,
       constants.LOCAL_ACTION_TYPES,
       constants.ARGUMENT_2,
@@ -51,21 +51,21 @@ export const createModuleAst = (
       constants
     ),
     createLiteralAliasDeclaration(
-      program,
+      sourceFile,
       fileInfo,
       constants.ROOT_GETTERS,
       constants.LOCAL_GETTERS,
       constants.GETTERS
     ),
     createLiteralAliasDeclaration(
-      program,
+      sourceFile,
       fileInfo,
       constants.MUTATION_TYPES,
       constants.LOCAL_MUTATION_TYPES,
       constants.MUTATIONS
     ),
     createLiteralAliasDeclaration(
-      program,
+      sourceFile,
       fileInfo,
       constants.ACTION_TYPES,
       constants.LOCAL_ACTION_TYPES,

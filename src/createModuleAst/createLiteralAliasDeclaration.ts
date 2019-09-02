@@ -51,31 +51,23 @@ function createPropertySignatures(
   )
 }
 function createPropertySignaturesFromSourceFile(
-  program: ts.Program,
+  sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   moduleAliasTypeName: string,
   variableDeclarationName: string
 ) {
-  const sourceFile = program.getSourceFile(
-    fileInfo.filePath
-  )
-  if (!sourceFile) return
   const typeDefinitions = sourceFile.getChildAt(0)
   return flatten(
     typeDefinitions
       .getChildren()
-      .filter((node): node is ts.VariableStatement =>
-        ts.isVariableStatement(node)
-      )
+      .filter(ts.isVariableStatement)
       .filter(node =>
         isExpectedIdentifierVariableStatement(
           node,
           variableDeclarationName
         )
       )
-      .map(node =>
-        getVariableDeclarationFromVariableStatement(node)
-      )
+      .map(getVariableDeclarationFromVariableStatement)
       .map(node =>
         createPropertySignatures(
           node,
@@ -92,7 +84,7 @@ function createPropertySignaturesFromSourceFile(
 //_______________________________________________________
 //
 export const createLiteralAliasDeclaration = (
-  program: ts.Program,
+  sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   distTypeName: string,
   moduleAliasTypeName: string,
@@ -105,7 +97,7 @@ export const createLiteralAliasDeclaration = (
     undefined,
     undefined,
     createPropertySignaturesFromSourceFile(
-      program,
+      sourceFile,
       fileInfo,
       moduleAliasTypeName,
       variableDeclarationName

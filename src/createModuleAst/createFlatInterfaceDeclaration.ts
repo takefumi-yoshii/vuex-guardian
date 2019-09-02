@@ -69,32 +69,24 @@ function createPropertySignatures(
   )
 }
 function createPropertySignaturesFromSourceFile(
-  program: ts.Program,
+  sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   wrapUtilityTypeName: string,
   variableDeclarationName: string,
   constants: Constants
 ) {
-  const sourceFile = program.getSourceFile(
-    fileInfo.filePath
-  )
-  if (!sourceFile) return
   const typeDefinitions = sourceFile.getChildAt(0)
   return flatten(
     typeDefinitions
       .getChildren()
-      .filter((node): node is ts.VariableStatement =>
-        ts.isVariableStatement(node)
-      )
+      .filter(ts.isVariableStatement)
       .filter(node =>
         isExpectedIdentifierVariableStatement(
           node,
           variableDeclarationName
         )
       )
-      .map(node =>
-        getVariableDeclarationFromVariableStatement(node)
-      )
+      .map(getVariableDeclarationFromVariableStatement)
       .map(node =>
         createPropertySignatures(
           node,
@@ -113,7 +105,7 @@ function createPropertySignaturesFromSourceFile(
 //_______________________________________________________
 //
 export const createFlatInterfaceDeclaration = (
-  program: ts.Program,
+  sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   distTypeName: string,
   wrapUtilityTypeName: string,
@@ -133,7 +125,7 @@ export const createFlatInterfaceDeclaration = (
         undefined,
         ts.createTypeLiteralNode(
           createPropertySignaturesFromSourceFile(
-            program,
+            sourceFile,
             fileInfo,
             wrapUtilityTypeName,
             variableDeclarationName,

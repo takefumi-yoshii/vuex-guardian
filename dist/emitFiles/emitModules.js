@@ -17,10 +17,13 @@ function emitModules(program, config, constants) {
     return function (fileInfo) {
         var dir = path.resolve(config.distDir);
         var distDir = dir + "/" + fileInfo.namespace + "/";
-        var fileName = distDir + "/" + fileInfo.fileName;
-        var ast = createModuleAst_1.createModuleAst(program, fileInfo, constants);
-        var fileBody = printNode_1.printNode(ast);
-        emitFile_1.emitFile(distDir, fileName, fileBody);
+        var fileName = "" + distDir + fileInfo.fileName;
+        var sourceFile = program.getSourceFile(fileInfo.filePath);
+        if (sourceFile) {
+            var ast = createModuleAst_1.createModuleAst(sourceFile, fileInfo, constants);
+            var fileBody = printNode_1.printNode(ast);
+            emitFile_1.emitFile(distDir, fileName, fileBody);
+        }
     };
 }
 exports.emitModules = emitModules;

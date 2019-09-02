@@ -31,6 +31,7 @@ const modulesTypesConstants = {
 }
 //_______________________________________________________
 //
+export const baseDir = '../vuex-guardian-example'
 export const storeDir = '../vuex-guardian-example/store'
 export const distDir = '../vuex-guardian-example/types/vuex'
 export const constants = {
@@ -40,6 +41,7 @@ export const constants = {
   ...modulesTypesConstants
 }
 export const config = {
+  baseDir,
   storeDir,
   distDir,
   constants,

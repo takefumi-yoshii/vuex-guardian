@@ -27,22 +27,15 @@ function createPropertySignatures(node, fileInfo, moduleAliasTypeName) {
         return getSignature(fileInfo, identifier, moduleAliasTypeName);
     });
 }
-function createPropertySignaturesFromSourceFile(program, fileInfo, moduleAliasTypeName, variableDeclarationName) {
-    var sourceFile = program.getSourceFile(fileInfo.filePath);
-    if (!sourceFile)
-        return;
+function createPropertySignaturesFromSourceFile(sourceFile, fileInfo, moduleAliasTypeName, variableDeclarationName) {
     var typeDefinitions = sourceFile.getChildAt(0);
     return lodash_flatten_1.default(typeDefinitions
         .getChildren()
-        .filter(function (node) {
-        return ts.isVariableStatement(node);
-    })
+        .filter(ts.isVariableStatement)
         .filter(function (node) {
         return helpers_1.isExpectedIdentifierVariableStatement(node, variableDeclarationName);
     })
-        .map(function (node) {
-        return helpers_1.getVariableDeclarationFromVariableStatement(node);
-    })
+        .map(helpers_1.getVariableDeclarationFromVariableStatement)
         .map(function (node) {
         return createPropertySignatures(node, fileInfo, moduleAliasTypeName);
     })
@@ -52,6 +45,6 @@ function createPropertySignaturesFromSourceFile(program, fileInfo, moduleAliasTy
 }
 //_______________________________________________________
 //
-exports.createLiteralAliasDeclaration = function (program, fileInfo, distTypeName, moduleAliasTypeName, variableDeclarationName) {
-    return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, createPropertySignaturesFromSourceFile(program, fileInfo, moduleAliasTypeName, variableDeclarationName));
+exports.createLiteralAliasDeclaration = function (sourceFile, fileInfo, distTypeName, moduleAliasTypeName, variableDeclarationName) {
+    return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, createPropertySignaturesFromSourceFile(sourceFile, fileInfo, moduleAliasTypeName, variableDeclarationName));
 };

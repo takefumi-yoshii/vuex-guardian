@@ -14,13 +14,16 @@ export function emitModules(
   return (fileInfo: FileInfo) => {
     const dir = path.resolve(config.distDir)
     const distDir = `${dir}/${fileInfo.namespace}/`
-    const fileName = `${distDir}/${fileInfo.fileName}`
-    const ast = createModuleAst(
-      program,
-      fileInfo,
-      constants
-    )
-    const fileBody = printNode(ast)
-    emitFile(distDir, fileName, fileBody)
+    const fileName = `${distDir}${fileInfo.fileName}`
+    const sourceFile = program.getSourceFile(fileInfo.filePath)
+    if (sourceFile) {
+      const ast = createModuleAst(
+        sourceFile,
+        fileInfo,
+        constants
+      )
+      const fileBody = printNode(ast)
+      emitFile(distDir, fileName, fileBody)
+    }
   }
 }

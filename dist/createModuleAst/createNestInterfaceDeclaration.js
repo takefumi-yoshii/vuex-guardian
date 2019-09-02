@@ -10,15 +10,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-function createPropertySignatures(fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
-    return [
+exports.createNestInterfaceDeclaration = function (fileInfo, distTypeName, wrapUtilityTypeName, variableDeclarationName, constants) {
+    return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, [
         ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.namespace), undefined, ts.createTypeReferenceNode(ts.createIdentifier(wrapUtilityTypeName), [
             ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.MODULES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.namespace))), ts.createLiteralTypeNode(ts.createStringLiteral(variableDeclarationName)))
         ]), undefined)
-    ];
-}
-//_______________________________________________________
-//
-exports.createNestInterfaceDeclaration = function (fileInfo, distTypeName, wrapUtilityTypeName, variableDeclarationName, constants) {
-    return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, createPropertySignatures(fileInfo, wrapUtilityTypeName, variableDeclarationName, constants));
+    ]);
 };
