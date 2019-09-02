@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -52,51 +41,33 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var fs = __importStar(require("fs-extra"));
-var path = __importStar(require("path"));
-var watchpack_1 = __importDefault(require("watchpack"));
-var config_1 = require("./config");
-var emitFiles_1 = require("./emitFiles");
+var ts = __importStar(require("typescript"));
+var getSourceFiles_1 = require("./getSourceFiles");
+var emitShims_1 = require("./emitShims");
+var emitModules_1 = require("./emitModules");
 //_______________________________________________________
 //
-function run(config) {
-    var storeDir = path.resolve(config.storeDir);
-    var distDir = path.resolve(config.distDir);
-    var constants = __assign({}, config_1.config.constants, config.constants);
-    fs.removeSync(distDir);
-    function onChange(filePath) {
-        var _this = this;
-        ;
-        (function () { return __awaiter(_this, void 0, void 0, function () {
-            var distTarget;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!fs.existsSync(filePath)) {
-                            distTarget = path.resolve(process.cwd +
-                                config.distDir +
-                                filePath.replace(storeDir, ''));
-                            fs.removeSync(distTarget);
-                        }
-                        return [4 /*yield*/, emitFiles_1.emitFiles(distDir, storeDir, config, constants)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        }); })();
-    }
-    if (config.build) {
-        emitFiles_1.emitFiles(distDir, storeDir, config, constants);
-    }
-    else {
-        var wp = new watchpack_1.default({});
-        wp.watch([], [storeDir]);
-        wp.on('change', onChange);
-    }
+function emitFiles(distDir, storeDir, config, constants) {
+    return __awaiter(this, void 0, void 0, function () {
+        var time, logger, _a, fileInfos, fileTree, files, program;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    time = Date.now();
+                    logger = time.toString() + ":vuex-guardian build";
+                    console.time(logger);
+                    return [4 /*yield*/, getSourceFiles_1.getSourceFiles(storeDir, 'index.ts')];
+                case 1:
+                    _a = _b.sent(), fileInfos = _a[0], fileTree = _a[1];
+                    files = fileInfos.map(function (file) { return file.filePath; });
+                    program = ts.createProgram(files, {});
+                    emitShims_1.emitShims(distDir, fileTree, constants);
+                    fileInfos.map(emitModules_1.emitModules(program, config, constants));
+                    console.timeEnd(logger);
+                    return [2 /*return*/];
+            }
+        });
+    });
 }
-exports.run = run;
+exports.emitFiles = emitFiles;

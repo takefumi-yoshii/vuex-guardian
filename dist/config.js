@@ -12,40 +12,45 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var dependenciesConstants = {
-    VUEX: "vuex",
-    STATE: "state",
-    GETTERS: "getters",
-    MUTATIONS: "mutations",
-    ACTIONS: "actions"
+    VUEX: 'vuex',
+    STATE: 'state',
+    GETTERS: 'getters',
+    MUTATIONS: 'mutations',
+    ACTIONS: 'actions'
 };
 var tsUtilityTypesConstants = {
-    RETURN_TYPE: "ReturnType"
+    RETURN_TYPE: 'ReturnType'
 };
 var shimsTypesConstants = {
-    ARGUMENT_2: "A2",
-    STRICT_COMMIT: "StrictCommit",
-    STRICT_DISPATCH: "StrictDispatch",
-    STRICT_CONTEXT: "StrictContext",
-    STRICT_STORE: "StrictStore",
-    ROOT_CONTEXT: "RootContext"
+    ARGUMENT_2: 'A2',
+    STRICT_COMMIT: 'StrictCommit',
+    STRICT_DISPATCH: 'StrictDispatch',
+    STRICT_CONTEXT: 'StrictContext',
+    STRICT_STORE: 'StrictStore',
+    ROOT_CONTEXT: 'RootContext'
 };
 var modulesTypesConstants = {
-    MODULE: "Module",
-    MODULES: "Modules",
-    LOCAL_STATE: "LocalState",
-    LOCAL_GETTERS: "LocalGetters",
-    LOCAL_MUTATION_TYPES: "LocalMutationTypes",
-    LOCAL_ACTION_TYPES: "LocalActionTypes",
-    LOCAL_CONTEXT: "LocalContext",
-    ROOT_STATE: "RootState",
-    ROOT_GETTERS: "RootGetters",
-    MUTATION_TYPES: "MutationTypes",
-    ACTION_TYPES: "ActionTypes"
+    MODULE: 'Module',
+    MODULES: 'Modules',
+    LOCAL_STATE: 'LocalState',
+    LOCAL_GETTERS: 'LocalGetters',
+    LOCAL_MUTATION_TYPES: 'LocalMutationTypes',
+    LOCAL_ACTION_TYPES: 'LocalActionTypes',
+    LOCAL_CONTEXT: 'LocalContext',
+    ROOT_STATE: 'RootState',
+    ROOT_GETTERS: 'RootGetters',
+    MUTATION_TYPES: 'MutationTypes',
+    ACTION_TYPES: 'ActionTypes'
 };
 //_______________________________________________________
 //
-exports.storeDir = "../vuex-guardian-example/store";
-exports.distDir = "../vuex-guardian-example/types/vuex";
+exports.storeDir = '../vuex-guardian-example/store';
+exports.distDir = '../vuex-guardian-example/types/vuex';
 exports.constants = __assign({}, dependenciesConstants, tsUtilityTypesConstants, shimsTypesConstants, modulesTypesConstants);
-exports.config = { storeDir: exports.storeDir, distDir: exports.distDir, constants: exports.constants, build: false };
+exports.config = {
+    storeDir: exports.storeDir,
+    distDir: exports.distDir,
+    constants: exports.constants,
+    build: false
+};
 exports.default = exports.config;

@@ -1,15 +1,15 @@
-import { Config, Constants } from "./config";
+import { Config, Constants } from './config'
 //_______________________________________________________
 //
-type TypeFile = {
-  fileName: string;
-  filePath: string;
-  namespace: string;
-  moduleName: string;
-};
-type FileTree = TypeFile & {
-  children?: FileTree[];
-};
+type FileInfo = {
+  fileName: string
+  filePath: string
+  namespace: string
+  moduleName: string
+}
+type FileTree = FileInfo & {
+  children?: FileTree[]
+}
 //_______________________________________________________
 //
-export { TypeFile, FileTree, Config, Constants };
+export { FileInfo, FileTree, Config, Constants }

@@ -33,5 +33,10 @@
     "prettier": "^1.18.2",
     "ts-node": "^8.3.0",
     "vuex": "^3.1.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 60
   }
 }
