@@ -7,5 +7,6 @@ node_modules
 .node-version
 .idea
 .editorconfig
+assets
 #dist/*
 #!dist/.keep
