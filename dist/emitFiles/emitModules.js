@@ -6,8 +6,7 @@ var emitFile_1 = require("./emitFile");
 //_______________________________________________________
 //
 exports.emitModule = function (sourceFile, fileInfo, constants) {
-    var ast = createModuleAst_1.createModuleAst(sourceFile, fileInfo, constants);
-    var fileBody = printNode_1.printNode(ast);
+    var fileBody = printNode_1.printNode(createModuleAst_1.createModuleAst(sourceFile, fileInfo, constants));
     emitFile_1.emitFile(fileInfo.distDir, fileInfo.distPath, fileBody);
 };
 //_______________________________________________________

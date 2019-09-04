@@ -11,5 +11,5 @@ var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
 exports.importModule = function (fileInfo, constants) {
-    return ts.createImportDeclaration(undefined, undefined, ts.createImportClause(undefined, ts.createNamespaceImport(ts.createIdentifier(constants.MODULE))), ts.createStringLiteral(fileInfo.filePath.slice(0, -3)));
+    return ts.createImportDeclaration(undefined, undefined, ts.createImportClause(undefined, ts.createNamespaceImport(ts.createIdentifier(constants.MODULE))), ts.createStringLiteral(fileInfo.importModulePath));
 };

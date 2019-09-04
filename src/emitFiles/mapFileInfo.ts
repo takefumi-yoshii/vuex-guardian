@@ -3,16 +3,16 @@ import { FileInfo } from '../types'
 //
 export function mapFileInfo(src: string, dist: string) {
   return (filePath: string): FileInfo => {
-    const fileDir = filePath
+    const fileTreeKeys = filePath
       .replace(`${src}/`, '')
       .split('/')
-    const fileName = fileDir[fileDir.length - 1]
-    fileDir.pop()
+    const fileName = fileTreeKeys[fileTreeKeys.length - 1]
+    fileTreeKeys.pop()
 
-    const nameSpace = fileDir.join('/')
+    const nameSpace = fileTreeKeys.join('/')
     const moduleName =
       fileName === 'index.ts'
-        ? fileDir[fileDir.length - 1]
+        ? fileTreeKeys[fileTreeKeys.length - 1]
         : fileName.replace('.ts', '')
     const importModulePath = filePath.replace('.ts', '')
     const distDir = `${dist}/${nameSpace}`
@@ -21,7 +21,7 @@ export function mapFileInfo(src: string, dist: string) {
     return {
       fileName,
       filePath,
-      fileDir,
+      fileTreeKeys,
       nameSpace,
       moduleName,
       importModulePath,

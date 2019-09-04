@@ -10,12 +10,9 @@ export const emitModule = (
   fileInfo: FileInfo,
   constants: Constants
 ) => {
-  const ast = createModuleAst(
-    sourceFile,
-    fileInfo,
-    constants
+  const fileBody = printNode(
+    createModuleAst(sourceFile, fileInfo, constants)
   )
-  const fileBody = printNode(ast)
   emitFile(fileInfo.distDir, fileInfo.distPath, fileBody)
 }
 //_______________________________________________________

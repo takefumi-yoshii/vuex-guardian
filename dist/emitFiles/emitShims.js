@@ -6,8 +6,7 @@ var emitFile_1 = require("./emitFile");
 // ______________________________________________________
 //
 exports.emitShims = function (distDir, fileInfos, constants) {
-    var ast = createShimsAst_1.createShimsAst(fileInfos, constants);
-    var fileBody = printNode_1.printNode(ast);
+    var fileBody = printNode_1.printNode(createShimsAst_1.createShimsAst(fileInfos, constants));
     var distPath = distDir + "/vuex-shims.ts";
     emitFile_1.emitFile(distDir, distPath, fileBody);
 };

@@ -11,6 +11,11 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.baseDir = '.';
+exports.storeDir = './store';
+exports.distDir = './types/vuex';
+//_______________________________________________________
+//
 var dependenciesConstants = {
     VUEX: 'vuex',
     STATE: 'state',
@@ -18,15 +23,16 @@ var dependenciesConstants = {
     MUTATIONS: 'mutations',
     ACTIONS: 'actions'
 };
-var tsUtilityTypesConstants = {
-    RETURN_TYPE: 'ReturnType'
+var utilityTypesConstants = {
+    RETURN_TYPE: 'ReturnType',
+    ARGUMENT_2: 'A2'
 };
 var shimsTypesConstants = {
-    ARGUMENT_2: 'A2',
     STRICT_COMMIT: 'StrictCommit',
     STRICT_DISPATCH: 'StrictDispatch',
     STRICT_CONTEXT: 'StrictContext',
     STRICT_STORE: 'StrictStore',
+    ROOT_STATE: 'RootState',
     ROOT_CONTEXT: 'RootContext'
 };
 var modulesTypesConstants = {
@@ -37,17 +43,13 @@ var modulesTypesConstants = {
     LOCAL_MUTATION_TYPES: 'LocalMutationTypes',
     LOCAL_ACTION_TYPES: 'LocalActionTypes',
     LOCAL_CONTEXT: 'LocalContext',
-    ROOT_STATE: 'RootState',
     ROOT_GETTERS: 'RootGetters',
     MUTATION_TYPES: 'MutationTypes',
     ACTION_TYPES: 'ActionTypes'
 };
+exports.constants = __assign({}, dependenciesConstants, utilityTypesConstants, shimsTypesConstants, modulesTypesConstants);
 //_______________________________________________________
 //
-exports.baseDir = '.';
-exports.storeDir = './store';
-exports.distDir = './types/vuex';
-exports.constants = __assign({}, dependenciesConstants, tsUtilityTypesConstants, shimsTypesConstants, modulesTypesConstants);
 exports.config = {
     baseDir: exports.baseDir,
     storeDir: exports.storeDir,
@@ -55,4 +57,6 @@ exports.config = {
     constants: exports.constants,
     build: false
 };
+//_______________________________________________________
+//
 exports.default = exports.config;

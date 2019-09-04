@@ -20,19 +20,19 @@ var getSignature = function (fileInfo, wrapUtilityTypeName, variableDeclarationN
 var getIntersectionTypeNode = function (fileInfos, constants) {
     return fileInfos.map(function (fileInfo) {
         var current = 0;
-        if (!fileInfo.fileDir[current]) {
+        if (!fileInfo.fileTreeKeys[current]) {
             // for Root Module
             return getSignature(fileInfo, constants.RETURN_TYPE, constants.STATE, constants);
         }
         var visit = function () {
-            if (fileInfo.fileDir[current + 1]) {
+            if (fileInfo.fileTreeKeys[current + 1]) {
                 // for Nest Node
                 current++;
-                return ts.createPropertySignature(undefined, ts.createIdentifier(fileInfo.fileDir[current - 1]), undefined, ts.createTypeLiteralNode([visit()]), undefined);
+                return ts.createPropertySignature(undefined, ts.createIdentifier(fileInfo.fileTreeKeys[current - 1]), undefined, ts.createTypeLiteralNode([visit()]), undefined);
             }
             else {
                 // for Signature Node
-                return ts.createPropertySignature(undefined, ts.createIdentifier(fileInfo.fileDir[current]), undefined, getSignature(fileInfo, constants.RETURN_TYPE, constants.STATE, constants), undefined);
+                return ts.createPropertySignature(undefined, ts.createIdentifier(fileInfo.fileTreeKeys[current]), undefined, getSignature(fileInfo, constants.RETURN_TYPE, constants.STATE, constants), undefined);
             }
         };
         return ts.createTypeLiteralNode([visit()]);

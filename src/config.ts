@@ -1,3 +1,8 @@
+export const baseDir = '.'
+export const storeDir = './store'
+export const distDir = './types/vuex'
+//_______________________________________________________
+//
 const dependenciesConstants = {
   VUEX: 'vuex',
   STATE: 'state',
@@ -5,15 +10,16 @@ const dependenciesConstants = {
   MUTATIONS: 'mutations',
   ACTIONS: 'actions'
 }
-const tsUtilityTypesConstants = {
-  RETURN_TYPE: 'ReturnType'
+const utilityTypesConstants = {
+  RETURN_TYPE: 'ReturnType',
+  ARGUMENT_2: 'A2'
 }
 const shimsTypesConstants = {
-  ARGUMENT_2: 'A2',
   STRICT_COMMIT: 'StrictCommit',
   STRICT_DISPATCH: 'StrictDispatch',
   STRICT_CONTEXT: 'StrictContext',
   STRICT_STORE: 'StrictStore',
+  ROOT_STATE: 'RootState',
   ROOT_CONTEXT: 'RootContext'
 }
 const modulesTypesConstants = {
@@ -24,22 +30,18 @@ const modulesTypesConstants = {
   LOCAL_MUTATION_TYPES: 'LocalMutationTypes',
   LOCAL_ACTION_TYPES: 'LocalActionTypes',
   LOCAL_CONTEXT: 'LocalContext',
-  ROOT_STATE: 'RootState',
   ROOT_GETTERS: 'RootGetters',
   MUTATION_TYPES: 'MutationTypes',
   ACTION_TYPES: 'ActionTypes'
 }
-//_______________________________________________________
-//
-export const baseDir = '.'
-export const storeDir = './store'
-export const distDir = './types/vuex'
 export const constants = {
   ...dependenciesConstants,
-  ...tsUtilityTypesConstants,
+  ...utilityTypesConstants,
   ...shimsTypesConstants,
   ...modulesTypesConstants
 }
+//_______________________________________________________
+//
 export const config = {
   baseDir,
   storeDir,
@@ -47,6 +49,10 @@ export const config = {
   constants,
   build: false
 }
+//_______________________________________________________
+//
 export type Constants = typeof constants
 export type Config = typeof config
+//_______________________________________________________
+//
 export default config

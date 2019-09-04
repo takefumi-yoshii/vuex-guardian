@@ -35,7 +35,7 @@ const getIntersectionTypeNode = (
 ) =>
   fileInfos.map(fileInfo => {
     let current = 0
-    if (!fileInfo.fileDir[current]) {
+    if (!fileInfo.fileTreeKeys[current]) {
       // for Root Module
       return getSignature(
         fileInfo,
@@ -45,13 +45,13 @@ const getIntersectionTypeNode = (
       )
     }
     const visit = (): ts.TypeElement => {
-      if (fileInfo.fileDir[current + 1]) {
+      if (fileInfo.fileTreeKeys[current + 1]) {
         // for Nest Node
         current++
         return ts.createPropertySignature(
           undefined,
           ts.createIdentifier(
-            fileInfo.fileDir[current - 1]
+            fileInfo.fileTreeKeys[current - 1]
           ),
           undefined,
           ts.createTypeLiteralNode([visit()]),
@@ -61,7 +61,9 @@ const getIntersectionTypeNode = (
         // for Signature Node
         return ts.createPropertySignature(
           undefined,
-          ts.createIdentifier(fileInfo.fileDir[current]),
+          ts.createIdentifier(
+            fileInfo.fileTreeKeys[current]
+          ),
           undefined,
           getSignature(
             fileInfo,

@@ -15,5 +15,5 @@ export const importModule = (
         ts.createIdentifier(constants.MODULE)
       )
     ),
-    ts.createStringLiteral(fileInfo.filePath.slice(0, -3))
+    ts.createStringLiteral(fileInfo.importModulePath)
   )

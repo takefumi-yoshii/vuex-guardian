@@ -4,7 +4,7 @@ import { Config, Constants } from './config'
 type FileInfo = {
   fileName: string
   filePath: string
-  fileDir: string[]
+  fileTreeKeys: string[]
   nameSpace: string
   moduleName: string
   importModulePath: string

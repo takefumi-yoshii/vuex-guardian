@@ -9,8 +9,9 @@ export const emitShims = (
   fileInfos: FileInfo[],
   constants: Constants
 ) => {
-  const ast = createShimsAst(fileInfos, constants)
-  const fileBody = printNode(ast)
+  const fileBody = printNode(
+    createShimsAst(fileInfos, constants)
+  )
   const distPath = `${distDir}/vuex-shims.ts`
   emitFile(distDir, distPath, fileBody)
 }
