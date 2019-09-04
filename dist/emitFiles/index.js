@@ -41,33 +41,38 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var ts = __importStar(require("typescript"));
-var getSourceFiles_1 = require("./getSourceFiles");
+var path = __importStar(require("path"));
+var createProgram_1 = require("../createProgram");
+var mapFileInfo_1 = require("./mapFileInfo");
 var emitShims_1 = require("./emitShims");
-var emitModules_1 = require("./emitModules");
+var emitModule_1 = require("./emitModule");
 //_______________________________________________________
 //
-function emitFiles(distDir, storeDir, config, constants) {
-    return __awaiter(this, void 0, void 0, function () {
-        var time, logger, _a, fileInfos, fileTree, files, program;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    time = Date.now();
-                    logger = time.toString() + ":vuex-guardian build";
-                    console.time(logger);
-                    return [4 /*yield*/, getSourceFiles_1.getSourceFiles(storeDir, 'index.ts')];
-                case 1:
-                    _a = _b.sent(), fileInfos = _a[0], fileTree = _a[1];
-                    files = fileInfos.map(function (file) { return file.filePath; });
-                    program = ts.createProgram(files, {});
-                    emitShims_1.emitShims(distDir, fileTree, constants);
-                    fileInfos.map(emitModules_1.emitModules(program, config, constants));
-                    console.timeEnd(logger);
-                    return [2 /*return*/];
+exports.emitFiles = function (distDir, storeDir, config, constants) { return __awaiter(_this, void 0, void 0, function () {
+    var time, logger, baseDir, program, fileInfos;
+    return __generator(this, function (_a) {
+        time = Date.now();
+        logger = time.toString() + ":vuex-guardian build";
+        console.time(logger);
+        baseDir = path.resolve(config.baseDir);
+        program = createProgram_1.createProgram(baseDir);
+        fileInfos = program
+            .getRootFileNames()
+            .filter(function (fileName) { return fileName.match(storeDir); })
+            .map(mapFileInfo_1.mapFileInfo(storeDir, distDir));
+        // emit files
+        emitShims_1.emitShims(distDir, fileInfos, constants);
+        fileInfos.map(function (fileInfo) {
+            var sourceFile = program.getSourceFile(fileInfo.filePath);
+            if (sourceFile) {
+                emitModule_1.emitModule(sourceFile, fileInfo, constants);
             }
         });
+        //_________________________
+        //
+        console.timeEnd(logger);
+        return [2 /*return*/];
     });
-}
-exports.emitFiles = emitFiles;
+}); };

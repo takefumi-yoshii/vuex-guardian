@@ -18,7 +18,7 @@ export const createNestInterfaceDeclaration = (
     [
       ts.createPropertySignature(
         undefined,
-        ts.createStringLiteral(fileInfo.namespace),
+        ts.createStringLiteral(fileInfo.nameSpace),
         undefined,
         ts.createTypeReferenceNode(
           ts.createIdentifier(wrapUtilityTypeName),
@@ -30,7 +30,7 @@ export const createNestInterfaceDeclaration = (
                   undefined
                 ),
                 ts.createLiteralTypeNode(
-                  ts.createStringLiteral(fileInfo.namespace)
+                  ts.createStringLiteral(fileInfo.nameSpace)
                 )
               ),
               ts.createLiteralTypeNode(

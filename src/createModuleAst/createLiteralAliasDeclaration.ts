@@ -13,13 +13,13 @@ function getSignature(
   identifier: string,
   moduleAliasTypeName: string
 ) {
-  const namespace =
-    fileInfo.namespace === ''
+  const nameSpace =
+    fileInfo.nameSpace === ''
       ? ''
-      : `${fileInfo.namespace}/`
+      : `${fileInfo.nameSpace}/`
   return ts.createPropertySignature(
     undefined,
-    ts.createStringLiteral(`${namespace}${identifier}`),
+    ts.createStringLiteral(`${nameSpace}${identifier}`),
     undefined,
     ts.createIndexedAccessTypeNode(
       ts.createIndexedAccessTypeNode(
@@ -28,7 +28,7 @@ function getSignature(
           undefined
         ),
         ts.createLiteralTypeNode(
-          ts.createStringLiteral(fileInfo.namespace)
+          ts.createStringLiteral(fileInfo.nameSpace)
         )
       ),
       ts.createLiteralTypeNode(

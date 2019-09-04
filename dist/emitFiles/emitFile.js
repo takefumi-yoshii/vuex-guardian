@@ -10,10 +10,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = __importStar(require("fs-extra"));
 // ______________________________________________________
 //
-function emitFile(distDir, fileName, fileBody) {
+exports.emitFile = function (distDir, fileName, fileBody) {
     if (!fs.existsSync(distDir)) {
         fs.mkdirsSync(distDir);
     }
     fs.writeFileSync(fileName, fileBody);
-}
-exports.emitFile = emitFile;
+};

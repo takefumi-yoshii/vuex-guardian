@@ -30,7 +30,7 @@ function getSignature(
                 undefined
               ),
               ts.createLiteralTypeNode(
-                ts.createStringLiteral(fileInfo.namespace)
+                ts.createStringLiteral(fileInfo.nameSpace)
               )
             ),
             ts.createLiteralTypeNode(
@@ -121,7 +121,7 @@ export const createFlatInterfaceDeclaration = (
     [
       ts.createPropertySignature(
         undefined,
-        ts.createStringLiteral(fileInfo.namespace),
+        ts.createStringLiteral(fileInfo.nameSpace),
         undefined,
         ts.createTypeLiteralNode(
           createPropertySignaturesFromSourceFile(

@@ -12,11 +12,11 @@ var ts = __importStar(require("typescript"));
 //
 exports.createLocalContext = function (fileInfo, distTypeName, constants) {
     return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, [
-        ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.namespace), undefined, ts.createTypeReferenceNode(ts.createIdentifier(constants.STRICT_CONTEXT), [
-            ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_STATE), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.namespace))),
-            ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_GETTERS), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.namespace))),
-            ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_MUTATION_TYPES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.namespace))),
-            ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_ACTION_TYPES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.namespace)))
+        ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.nameSpace), undefined, ts.createTypeReferenceNode(ts.createIdentifier(constants.STRICT_CONTEXT), [
+            ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_STATE), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))),
+            ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_GETTERS), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))),
+            ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_MUTATION_TYPES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))),
+            ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_ACTION_TYPES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace)))
         ]), undefined)
     ]);
 };

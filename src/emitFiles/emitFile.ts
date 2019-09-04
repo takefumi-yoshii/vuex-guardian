@@ -1,11 +1,11 @@
 import * as fs from 'fs-extra'
 // ______________________________________________________
 //
-export function emitFile(
+export const emitFile = (
   distDir: string,
   fileName: string,
   fileBody: string
-) {
+) => {
   if (!fs.existsSync(distDir)) {
     fs.mkdirsSync(distDir)
   }

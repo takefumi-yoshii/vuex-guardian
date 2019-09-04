@@ -15,7 +15,7 @@ export const createImoprtModules = (
     [
       ts.createPropertySignature(
         undefined,
-        ts.createStringLiteral(fileInfo.namespace),
+        ts.createStringLiteral(fileInfo.nameSpace),
         undefined,
         ts.createTypeQueryNode(
           ts.createIdentifier(constants.MODULE)

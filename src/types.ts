@@ -4,12 +4,13 @@ import { Config, Constants } from './config'
 type FileInfo = {
   fileName: string
   filePath: string
-  namespace: string
+  fileDir: string[]
+  distDir: string
+  distFileName: string
   moduleName: string
-}
-type FileTree = FileInfo & {
-  children?: FileTree[]
+  importModulePath: string
+  nameSpace: string
 }
 //_______________________________________________________
 //
-export { FileInfo, FileTree, Config, Constants }
+export { FileInfo, Config, Constants }

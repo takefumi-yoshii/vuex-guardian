@@ -17,7 +17,7 @@ var rootState_1 = require("./rootState");
 var rootContext_1 = require("./rootContext");
 //_______________________________________________________
 //
-exports.createShimsAst = function (fileTree, constants) { return [
+exports.createShimsAst = function (fileInfos, constants) { return [
     ts.createImportDeclaration(undefined, undefined, undefined, ts.createStringLiteral(constants.VUEX)),
-    ts.createModuleDeclaration(undefined, [ts.createModifier(ts.SyntaxKind.DeclareKeyword)], ts.createStringLiteral(constants.VUEX), ts.createModuleBlock(argument2_1.argument2(constants).concat(strictCommit_1.strictCommit(constants), strictDispatch_1.strictDispatch(constants), strictContext_1.strictContext(constants), strictStore_1.strictStore(constants), rootState_1.rootState(fileTree, constants), rootContext_1.rootContext(constants))))
+    ts.createModuleDeclaration(undefined, [ts.createModifier(ts.SyntaxKind.DeclareKeyword)], ts.createStringLiteral(constants.VUEX), ts.createModuleBlock(argument2_1.argument2(constants).concat(strictCommit_1.strictCommit(constants), strictDispatch_1.strictDispatch(constants), strictContext_1.strictContext(constants), strictStore_1.strictStore(constants), rootState_1.rootState(fileInfos, constants), rootContext_1.rootContext(constants))))
 ]; };

@@ -1,5 +1,5 @@
 import * as ts from 'typescript'
-import { Constants, FileTree } from '../types'
+import { Constants, FileInfo } from '../types'
 import { argument2 } from './argument2'
 import { strictCommit } from './strictCommit'
 import { strictDispatch } from './strictDispatch'
@@ -10,7 +10,7 @@ import { rootContext } from './rootContext'
 //_______________________________________________________
 //
 export const createShimsAst = (
-  fileTree: FileTree[],
+  fileInfos: FileInfo[],
   constants: Constants
 ) => [
   ts.createImportDeclaration(
@@ -29,7 +29,7 @@ export const createShimsAst = (
       ...strictDispatch(constants),
       ...strictContext(constants),
       ...strictStore(constants),
-      ...rootState(fileTree, constants),
+      ...rootState(fileInfos, constants),
       ...rootContext(constants)
     ])
   )

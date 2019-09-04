@@ -12,6 +12,6 @@ var ts = __importStar(require("typescript"));
 //
 exports.createImoprtModules = function (fileInfo, constants) {
     return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(constants.MODULES), undefined, undefined, [
-        ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.namespace), undefined, ts.createTypeQueryNode(ts.createIdentifier(constants.MODULE)), undefined)
+        ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.nameSpace), undefined, ts.createTypeQueryNode(ts.createIdentifier(constants.MODULE)), undefined)
     ]);
 };

@@ -16,7 +16,7 @@ export const createLocalContext = (
     [
       ts.createPropertySignature(
         undefined,
-        ts.createStringLiteral(fileInfo.namespace),
+        ts.createStringLiteral(fileInfo.nameSpace),
         undefined,
         ts.createTypeReferenceNode(
           ts.createIdentifier(constants.STRICT_CONTEXT),
@@ -27,7 +27,7 @@ export const createLocalContext = (
                 undefined
               ),
               ts.createLiteralTypeNode(
-                ts.createStringLiteral(fileInfo.namespace)
+                ts.createStringLiteral(fileInfo.nameSpace)
               )
             ),
             ts.createIndexedAccessTypeNode(
@@ -38,7 +38,7 @@ export const createLocalContext = (
                 undefined
               ),
               ts.createLiteralTypeNode(
-                ts.createStringLiteral(fileInfo.namespace)
+                ts.createStringLiteral(fileInfo.nameSpace)
               )
             ),
             ts.createIndexedAccessTypeNode(
@@ -49,7 +49,7 @@ export const createLocalContext = (
                 undefined
               ),
               ts.createLiteralTypeNode(
-                ts.createStringLiteral(fileInfo.namespace)
+                ts.createStringLiteral(fileInfo.nameSpace)
               )
             ),
             ts.createIndexedAccessTypeNode(
@@ -60,7 +60,7 @@ export const createLocalContext = (
                 undefined
               ),
               ts.createLiteralTypeNode(
-                ts.createStringLiteral(fileInfo.namespace)
+                ts.createStringLiteral(fileInfo.nameSpace)
               )
             )
           ]

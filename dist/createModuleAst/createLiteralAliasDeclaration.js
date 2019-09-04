@@ -16,10 +16,10 @@ var helpers_1 = require("./helpers");
 //_______________________________________________________
 //
 function getSignature(fileInfo, identifier, moduleAliasTypeName) {
-    var namespace = fileInfo.namespace === ''
+    var nameSpace = fileInfo.nameSpace === ''
         ? ''
-        : fileInfo.namespace + "/";
-    return ts.createPropertySignature(undefined, ts.createStringLiteral("" + namespace + identifier), undefined, ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(moduleAliasTypeName), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.namespace))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier))), undefined);
+        : fileInfo.nameSpace + "/";
+    return ts.createPropertySignature(undefined, ts.createStringLiteral("" + nameSpace + identifier), undefined, ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(moduleAliasTypeName), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier))), undefined);
 }
 function createPropertySignatures(node, fileInfo, moduleAliasTypeName) {
     var identifiers = helpers_1.getMethodDeclarationNamesFromVariableDeclaration(node);

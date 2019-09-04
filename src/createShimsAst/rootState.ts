@@ -1,15 +1,14 @@
 import * as ts from 'typescript'
-import flatten from 'lodash.flatten'
-import { FileTree, Constants } from '../types'
+import { FileInfo, Constants } from '../types'
 //_______________________________________________________
 //
-function getSignature(
-  fileTree: FileTree,
+const getSignature = (
+  fileInfo: FileInfo,
   wrapUtilityTypeName: string,
   variableDeclarationName: string,
   constants: Constants
-) {
-  return ts.createTypeReferenceNode(
+) =>
+  ts.createTypeReferenceNode(
     ts.createIdentifier(wrapUtilityTypeName),
     [
       ts.createIndexedAccessTypeNode(
@@ -19,7 +18,7 @@ function getSignature(
             undefined
           ),
           ts.createLiteralTypeNode(
-            ts.createStringLiteral(fileTree.namespace)
+            ts.createStringLiteral(fileInfo.nameSpace)
           )
         ),
         ts.createLiteralTypeNode(
@@ -28,91 +27,67 @@ function getSignature(
       )
     ]
   )
-}
+//_______________________________________________________
+//
+const getIntersectionTypeNode = (
+  fileInfos: FileInfo[],
+  constants: Constants
+) =>
+  fileInfos.map(fileInfo => {
+    let current = 0
+    if (!fileInfo.fileDir[current]) {
+      // for Root Module
+      return getSignature(
+        fileInfo,
+        constants.RETURN_TYPE,
+        constants.STATE,
+        constants
+      )
+    }
+    const visit = (): ts.TypeElement => {
+      if (fileInfo.fileDir[current + 1]) {
+        // for Nest Node
+        current++
+        return ts.createPropertySignature(
+          undefined,
+          ts.createIdentifier(
+            fileInfo.fileDir[current - 1]
+          ),
+          undefined,
+          ts.createTypeLiteralNode([visit()]),
+          undefined
+        )
+      } else {
+        // for Signature Node
+        return ts.createPropertySignature(
+          undefined,
+          ts.createIdentifier(fileInfo.fileDir[current]),
+          undefined,
+          getSignature(
+            fileInfo,
+            constants.RETURN_TYPE,
+            constants.STATE,
+            constants
+          ),
+          undefined
+        )
+      }
+    }
+    return ts.createTypeLiteralNode([visit()])
+  })
 //_______________________________________________________
 //
 export const rootState = (
-  fileTree: FileTree[],
+  fileInfos: FileInfo[],
   constants: Constants
-) => {
-  const recurse = (tree: FileTree[]) => {
-    return tree
-      .map(definition => {
-        let node: ts.TypeElement[] = []
-        let name = definition.fileName
-        const children = definition.children
-        if (children) {
-          node.push(
-            ts.createPropertySignature(
-              undefined,
-              ts.createIdentifier(name),
-              undefined,
-              ts.createIntersectionTypeNode([
-                getSignature(
-                  children[0],
-                  constants.RETURN_TYPE,
-                  constants.STATE,
-                  constants
-                ),
-                ts.createTypeLiteralNode(
-                  flatten(recurse(children))
-                )
-              ]),
-              undefined
-            )
-          )
-        }
-        return node
-      })
-      .filter(
-        (element): element is ts.TypeElement[] =>
-          element !== undefined
-      )
-  }
-  if (
-    fileTree.filter(tree => tree.fileName === 'index.ts')
-      .length
-  ) {
-    return [
-      ts.createTypeAliasDeclaration(
-        undefined,
-        undefined,
-        ts.createIdentifier(constants.ROOT_STATE),
-        undefined,
-        ts.createIntersectionTypeNode([
-          ts.createTypeLiteralNode(
-            flatten(recurse(fileTree))
-          ),
-          ts.createTypeReferenceNode(
-            ts.createIdentifier(constants.RETURN_TYPE),
-            [
-              ts.createIndexedAccessTypeNode(
-                ts.createIndexedAccessTypeNode(
-                  ts.createTypeReferenceNode(
-                    ts.createIdentifier(constants.MODULES),
-                    undefined
-                  ),
-                  ts.createLiteralTypeNode(
-                    ts.createStringLiteral('')
-                  )
-                ),
-                ts.createLiteralTypeNode(
-                  ts.createStringLiteral(constants.STATE)
-                )
-              )
-            ]
-          )
-        ])
-      )
-    ]
-  }
-  return [
-    ts.createTypeAliasDeclaration(
-      undefined,
-      undefined,
-      ts.createIdentifier(constants.ROOT_STATE),
-      undefined,
-      ts.createTypeLiteralNode(flatten(recurse(fileTree)))
+) => [
+  ts.createTypeAliasDeclaration(
+    undefined,
+    undefined,
+    ts.createIdentifier(constants.ROOT_STATE),
+    undefined,
+    ts.createIntersectionTypeNode(
+      getIntersectionTypeNode(fileInfos, constants)
     )
-  ]
-}
+  )
+]
