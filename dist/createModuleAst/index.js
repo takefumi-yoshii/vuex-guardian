@@ -11,7 +11,7 @@ var createInterfaceForLocalContext_1 = require("./createInterfaceForLocalContext
 //_______________________________________________________
 //
 exports.createModuleAst = function (sourceFile, fileInfo, constants) { return [
-    importClause_1.importClause(constants.MODULE, fileInfo.importModulePath),
+    importClause_1.importClause(constants.MODULE, fileInfo.fileImportPath),
     importDeclaration_1.importDeclaration(constants.VUEX),
     declareModule_1.declareModule(constants.VUEX, [
         createInterfaceForModules_1.createInterfaceForModules(fileInfo, constants),

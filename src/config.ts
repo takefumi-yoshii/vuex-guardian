@@ -10,6 +10,8 @@ const dependenciesConstants = {
   MUTATIONS: 'mutations',
   ACTIONS: 'actions'
 }
+//_______________________________________________________
+//
 const utilityTypesConstants = {
   RETURN_TYPE: 'ReturnType',
   ARGUMENT_2: 'A2'

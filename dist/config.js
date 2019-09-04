@@ -23,6 +23,8 @@ var dependenciesConstants = {
     MUTATIONS: 'mutations',
     ACTIONS: 'actions'
 };
+//_______________________________________________________
+//
 var utilityTypesConstants = {
     RETURN_TYPE: 'ReturnType',
     ARGUMENT_2: 'A2'

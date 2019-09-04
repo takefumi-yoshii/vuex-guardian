@@ -7,6 +7,7 @@ export function mapFileInfo(src: string, dist: string) {
       .replace(`${src}/`, '')
       .split('/')
     const fileName = fileTreeKeys[fileTreeKeys.length - 1]
+    const fileImportPath = filePath.replace('.ts', '')
     fileTreeKeys.pop()
 
     const nameSpace = fileTreeKeys.join('/')
@@ -14,17 +15,17 @@ export function mapFileInfo(src: string, dist: string) {
       fileName === 'index.ts'
         ? fileTreeKeys[fileTreeKeys.length - 1]
         : fileName.replace('.ts', '')
-    const importModulePath = filePath.replace('.ts', '')
+
     const distDir = `${dist}/${nameSpace}`
     const distPath = `${distDir}/${fileName}`
 
     return {
       fileName,
       filePath,
+      fileImportPath,
       fileTreeKeys,
       nameSpace,
       moduleName,
-      importModulePath,
       distDir,
       distPath
     }

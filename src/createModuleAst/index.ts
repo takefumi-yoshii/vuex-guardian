@@ -15,7 +15,7 @@ export const createModuleAst = (
   fileInfo: FileInfo,
   constants: Constants
 ) => [
-  importClause(constants.MODULE, fileInfo.importModulePath),
+  importClause(constants.MODULE, fileInfo.fileImportPath),
   importDeclaration(constants.VUEX),
   declareModule(constants.VUEX, [
     createInterfaceForModules(fileInfo, constants),
