@@ -44,7 +44,7 @@ function createPropertySignaturesFromSourceFile(sourceFile, fileInfo, wrapUtilit
 }
 //_______________________________________________________
 //
-exports.createFlatInterfaceDeclaration = function (sourceFile, fileInfo, distTypeName, wrapUtilityTypeName, variableDeclarationName, constants) {
+exports.createInterfaceForLocal = function (sourceFile, fileInfo, distTypeName, wrapUtilityTypeName, variableDeclarationName, constants) {
     return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, [
         ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.nameSpace), undefined, ts.createTypeLiteralNode(createPropertySignaturesFromSourceFile(sourceFile, fileInfo, wrapUtilityTypeName, variableDeclarationName, constants)), undefined)
     ]);

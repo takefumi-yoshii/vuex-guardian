@@ -74,24 +74,19 @@ function run(config) {
         (function () { return __awaiter(_this, void 0, void 0, function () {
             var distTarget;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!fs.existsSync(filePath)) {
-                            distTarget = path.resolve(process.cwd +
-                                config.distDir +
-                                filePath.replace(storeDir, ''));
-                            fs.removeSync(distTarget);
-                        }
-                        return [4 /*yield*/, emitFiles_1.emitFiles(distDir, storeDir, config, constants)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
+                if (!fs.existsSync(filePath)) {
+                    distTarget = path.resolve(process.cwd +
+                        config.distDir +
+                        filePath.replace(storeDir, ''));
+                    fs.removeSync(distTarget);
                 }
+                emitFiles_1.emitFiles(storeDir, distDir, config, constants);
+                return [2 /*return*/];
             });
         }); })();
     }
     if (config.build) {
-        emitFiles_1.emitFiles(distDir, storeDir, config, constants);
+        emitFiles_1.emitFiles(storeDir, distDir, config, constants);
     }
     else {
         var wp = new watchpack_1.default({});

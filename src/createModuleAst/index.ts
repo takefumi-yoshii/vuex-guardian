@@ -3,11 +3,11 @@ import { FileInfo, Constants } from '../types'
 import { importModule } from './importModule'
 import { importByLiteral } from './importByLiteral'
 import { declareModule } from './declareModule'
-import { createImoprtModules } from './createImoprtModules'
-import { createNestInterfaceDeclaration } from './createNestInterfaceDeclaration'
-import { createFlatInterfaceDeclaration } from './createFlatInterfaceDeclaration'
-import { createLiteralAliasDeclaration } from './createLiteralAliasDeclaration'
-import { createLocalContext } from './createLocalContext'
+import { createInterfaceForModules } from './createInterfaceForModules'
+import { createInterfaceForLocalState } from './createInterfaceForLocalState'
+import { createInterfaceForLocal } from './createInterfaceForLocal'
+import { createInterfaceForRoot } from './createInterfaceForRoot'
+import { createInterfaceForLocalContext } from './createInterfaceForLocalContext'
 //_______________________________________________________
 //
 export const createModuleAst = (
@@ -18,15 +18,9 @@ export const createModuleAst = (
   importModule(fileInfo, constants),
   importByLiteral(constants.VUEX),
   declareModule(constants.VUEX, [
-    createImoprtModules(fileInfo, constants),
-    createNestInterfaceDeclaration(
-      fileInfo,
-      constants.LOCAL_STATE,
-      constants.RETURN_TYPE,
-      constants.STATE,
-      constants
-    ),
-    createFlatInterfaceDeclaration(
+    createInterfaceForModules(fileInfo, constants),
+    createInterfaceForLocalState(fileInfo, constants),
+    createInterfaceForLocal(
       sourceFile,
       fileInfo,
       constants.LOCAL_GETTERS,
@@ -34,7 +28,7 @@ export const createModuleAst = (
       constants.GETTERS,
       constants
     ),
-    createFlatInterfaceDeclaration(
+    createInterfaceForLocal(
       sourceFile,
       fileInfo,
       constants.LOCAL_MUTATION_TYPES,
@@ -42,7 +36,7 @@ export const createModuleAst = (
       constants.MUTATIONS,
       constants
     ),
-    createFlatInterfaceDeclaration(
+    createInterfaceForLocal(
       sourceFile,
       fileInfo,
       constants.LOCAL_ACTION_TYPES,
@@ -50,31 +44,27 @@ export const createModuleAst = (
       constants.ACTIONS,
       constants
     ),
-    createLiteralAliasDeclaration(
+    createInterfaceForRoot(
       sourceFile,
       fileInfo,
       constants.ROOT_GETTERS,
       constants.LOCAL_GETTERS,
       constants.GETTERS
     ),
-    createLiteralAliasDeclaration(
+    createInterfaceForRoot(
       sourceFile,
       fileInfo,
       constants.MUTATION_TYPES,
       constants.LOCAL_MUTATION_TYPES,
       constants.MUTATIONS
     ),
-    createLiteralAliasDeclaration(
+    createInterfaceForRoot(
       sourceFile,
       fileInfo,
       constants.ACTION_TYPES,
       constants.LOCAL_ACTION_TYPES,
       constants.ACTIONS
     ),
-    createLocalContext(
-      fileInfo,
-      constants.LOCAL_CONTEXT,
-      constants
-    )
+    createInterfaceForLocalContext(fileInfo, constants)
   ])
 ]

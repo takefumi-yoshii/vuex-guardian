@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import { FileInfo, Constants } from '../types'
 //_______________________________________________________
 //
-export const createImoprtModules = (
+export const createInterfaceForModules = (
   fileInfo: FileInfo,
   constants: Constants
 ) =>

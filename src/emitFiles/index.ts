@@ -3,12 +3,12 @@ import { Config, Constants } from '../types'
 import { createProgram } from '../createProgram'
 import { mapFileInfo } from './mapFileInfo'
 import { emitShims } from './emitShims'
-import { emitModule } from './emitModule'
+import { emitModules } from './emitModules'
 //_______________________________________________________
 //
-export const emitFiles = async (
-  distDir: string,
+export const emitFiles = (
   storeDir: string,
+  distDir: string,
   config: Config,
   constants: Constants
 ) => {
@@ -19,21 +19,14 @@ export const emitFiles = async (
   //
   const baseDir = path.resolve(config.baseDir)
   const program = createProgram(baseDir)
-  // parse target source files
   const fileInfos = program
     .getRootFileNames()
     .filter(fileName => fileName.match(storeDir))
     .map(mapFileInfo(storeDir, distDir))
-  // emit files
+  //_________________________
+  //
   emitShims(distDir, fileInfos, constants)
-  fileInfos.map(fileInfo => {
-    const sourceFile = program.getSourceFile(
-      fileInfo.filePath
-    )
-    if (sourceFile) {
-      emitModule(sourceFile, fileInfo, constants)
-    }
-  })
+  emitModules(fileInfos, program, constants)
   //_________________________
   //
   console.timeEnd(logger)

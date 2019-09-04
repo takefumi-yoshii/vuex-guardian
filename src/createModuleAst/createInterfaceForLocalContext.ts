@@ -2,15 +2,14 @@ import * as ts from 'typescript'
 import { FileInfo, Constants } from '../types'
 //_______________________________________________________
 //
-export const createLocalContext = (
+export const createInterfaceForLocalContext = (
   fileInfo: FileInfo,
-  distTypeName: string,
   constants: Constants
 ) =>
   ts.createInterfaceDeclaration(
     undefined,
     undefined,
-    ts.createIdentifier(distTypeName),
+    ts.createIdentifier(constants.LOCAL_CONTEXT),
     undefined,
     undefined,
     [

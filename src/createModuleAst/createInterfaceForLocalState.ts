@@ -2,17 +2,14 @@ import * as ts from 'typescript'
 import { FileInfo, Constants } from '../types'
 //_______________________________________________________
 //
-export const createNestInterfaceDeclaration = (
+export const createInterfaceForLocalState = (
   fileInfo: FileInfo,
-  distTypeName: string,
-  wrapUtilityTypeName: string,
-  variableDeclarationName: string,
   constants: Constants
 ) =>
   ts.createInterfaceDeclaration(
     undefined,
     undefined,
-    ts.createIdentifier(distTypeName),
+    ts.createIdentifier(constants.LOCAL_STATE),
     undefined,
     undefined,
     [
@@ -21,7 +18,7 @@ export const createNestInterfaceDeclaration = (
         ts.createStringLiteral(fileInfo.nameSpace),
         undefined,
         ts.createTypeReferenceNode(
-          ts.createIdentifier(wrapUtilityTypeName),
+          ts.createIdentifier(constants.RETURN_TYPE),
           [
             ts.createIndexedAccessTypeNode(
               ts.createIndexedAccessTypeNode(
@@ -34,9 +31,7 @@ export const createNestInterfaceDeclaration = (
                 )
               ),
               ts.createLiteralTypeNode(
-                ts.createStringLiteral(
-                  variableDeclarationName
-                )
+                ts.createStringLiteral(constants.STATE)
               )
             )
           ]

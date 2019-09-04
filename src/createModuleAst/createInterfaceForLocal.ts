@@ -104,7 +104,7 @@ function createPropertySignaturesFromSourceFile(
 }
 //_______________________________________________________
 //
-export const createFlatInterfaceDeclaration = (
+export const createInterfaceForLocal = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   distTypeName: string,

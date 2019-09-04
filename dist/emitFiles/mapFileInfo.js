@@ -10,20 +10,21 @@ function mapFileInfo(src, dist) {
         var fileName = fileDir[fileDir.length - 1];
         fileDir.pop();
         var nameSpace = fileDir.join('/');
-        var distDir = dist + "/" + nameSpace;
-        var distFileName = distDir + "/" + fileName;
         var moduleName = fileName === 'index.ts'
             ? fileDir[fileDir.length - 1]
             : fileName.replace('.ts', '');
+        var importModulePath = filePath.replace('.ts', '');
+        var distDir = dist + "/" + nameSpace;
+        var distPath = distDir + "/" + fileName;
         return {
             fileName: fileName,
             filePath: filePath,
             fileDir: fileDir,
-            distDir: distDir,
-            distFileName: distFileName,
+            nameSpace: nameSpace,
             moduleName: moduleName,
-            importModulePath: filePath.replace('.ts', ''),
-            nameSpace: nameSpace
+            importModulePath: importModulePath,
+            distDir: distDir,
+            distPath: distPath
         };
     };
 }

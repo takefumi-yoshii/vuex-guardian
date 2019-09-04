@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-exports.createImoprtModules = function (fileInfo, constants) {
+exports.createInterfaceForModules = function (fileInfo, constants) {
     return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(constants.MODULES), undefined, undefined, [
         ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.nameSpace), undefined, ts.createTypeQueryNode(ts.createIdentifier(constants.MODULE)), undefined)
     ]);

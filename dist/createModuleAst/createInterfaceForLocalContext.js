@@ -10,8 +10,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-exports.createLocalContext = function (fileInfo, distTypeName, constants) {
-    return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, [
+exports.createInterfaceForLocalContext = function (fileInfo, constants) {
+    return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(constants.LOCAL_CONTEXT), undefined, undefined, [
         ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.nameSpace), undefined, ts.createTypeReferenceNode(ts.createIdentifier(constants.STRICT_CONTEXT), [
             ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_STATE), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))),
             ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.LOCAL_GETTERS), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))),

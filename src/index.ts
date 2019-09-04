@@ -25,12 +25,12 @@ export function run(config: Config) {
         )
         fs.removeSync(distTarget)
       }
-      await emitFiles(distDir, storeDir, config, constants)
+      emitFiles(storeDir, distDir, config, constants)
     })()
   }
 
   if (config.build) {
-    emitFiles(distDir, storeDir, config, constants)
+    emitFiles(storeDir, distDir, config, constants)
   } else {
     const wp = new Watchpack({})
     wp.watch([], [storeDir])

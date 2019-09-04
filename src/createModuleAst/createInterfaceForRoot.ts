@@ -83,7 +83,7 @@ function createPropertySignaturesFromSourceFile(
 }
 //_______________________________________________________
 //
-export const createLiteralAliasDeclaration = (
+export const createInterfaceForRoot = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   distTypeName: string,

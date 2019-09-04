@@ -10,31 +10,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-function getSignature(fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
+var getSignature = function (fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
     return ts.createTypeReferenceNode(ts.createIdentifier(wrapUtilityTypeName), [
         ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.MODULES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(variableDeclarationName)))
     ]);
-}
+};
 //_______________________________________________________
 //
-exports.rootState = function (fileInfos, constants) {
-    var node = fileInfos.map(function (fileInfo) {
+var getIntersectionTypeNode = function (fileInfos, constants) {
+    return fileInfos.map(function (fileInfo) {
         var current = 0;
         if (!fileInfo.fileDir[current]) {
+            // for Root Module
             return getSignature(fileInfo, constants.RETURN_TYPE, constants.STATE, constants);
         }
         var visit = function () {
             if (fileInfo.fileDir[current + 1]) {
+                // for Nest Node
                 current++;
                 return ts.createPropertySignature(undefined, ts.createIdentifier(fileInfo.fileDir[current - 1]), undefined, ts.createTypeLiteralNode([visit()]), undefined);
             }
             else {
+                // for Signature Node
                 return ts.createPropertySignature(undefined, ts.createIdentifier(fileInfo.fileDir[current]), undefined, getSignature(fileInfo, constants.RETURN_TYPE, constants.STATE, constants), undefined);
             }
         };
         return ts.createTypeLiteralNode([visit()]);
     });
-    return [
-        ts.createTypeAliasDeclaration(undefined, undefined, ts.createIdentifier(constants.ROOT_STATE), undefined, ts.createIntersectionTypeNode(node))
-    ];
 };
+//_______________________________________________________
+//
+exports.rootState = function (fileInfos, constants) { return [
+    ts.createTypeAliasDeclaration(undefined, undefined, ts.createIdentifier(constants.ROOT_STATE), undefined, ts.createIntersectionTypeNode(getIntersectionTypeNode(fileInfos, constants)))
+]; };

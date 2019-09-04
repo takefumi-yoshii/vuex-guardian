@@ -45,6 +45,6 @@ function createPropertySignaturesFromSourceFile(sourceFile, fileInfo, moduleAlia
 }
 //_______________________________________________________
 //
-exports.createLiteralAliasDeclaration = function (sourceFile, fileInfo, distTypeName, moduleAliasTypeName, variableDeclarationName) {
+exports.createInterfaceForRoot = function (sourceFile, fileInfo, distTypeName, moduleAliasTypeName, variableDeclarationName) {
     return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, createPropertySignaturesFromSourceFile(sourceFile, fileInfo, moduleAliasTypeName, variableDeclarationName));
 };
