@@ -16,17 +16,12 @@ export function run(config: Config) {
   fs.removeSync(distDir)
 
   function onChange(filePath: string) {
-    ;(async () => {
-      if (!fs.existsSync(filePath)) {
-        const distTarget = path.resolve(
-          process.cwd +
-            config.distDir +
-            filePath.replace(storeDir, '')
-        )
-        fs.removeSync(distTarget)
-      }
-      emitFiles(storeDir, distDir, config, constants)
-    })()
+    if (!fs.existsSync(filePath)) {
+      fs.removeSync(
+        `${distDir}${filePath.replace(storeDir, '')}`
+      )
+    }
+    emitFiles(storeDir, distDir, config, constants)
   }
 
   if (config.build) {
