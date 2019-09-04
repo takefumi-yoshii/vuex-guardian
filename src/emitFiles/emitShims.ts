@@ -1,6 +1,6 @@
 import { Constants, FileInfo } from '../types'
 import { createShimsAst } from '../createShimsAst'
-import { printNode } from '../printNode'
+import { printNode } from './printNode'
 import { emitFile } from './emitFile'
 // ______________________________________________________
 //

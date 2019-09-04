@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import { FileInfo, Constants } from '../types'
 import { createModuleAst } from '../createModuleAst'
-import { printNode } from '../printNode'
+import { printNode } from './printNode'
 import { emitFile } from './emitFile'
 //_______________________________________________________
 //
