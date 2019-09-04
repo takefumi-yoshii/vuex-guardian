@@ -1,5 +1,5 @@
 import { Constants, FileInfo } from '../types'
-import { importByLiteral } from '../astFactories/importByLiteral'
+import { importDeclaration } from '../astFactories/importDeclaration'
 import { declareModule } from '../astFactories/declareModule'
 import { argument2 } from './argument2'
 import { strictCommit } from './strictCommit'
@@ -14,7 +14,7 @@ export const createShimsAst = (
   fileInfos: FileInfo[],
   constants: Constants
 ) => [
-  importByLiteral(constants.VUEX),
+  importDeclaration(constants.VUEX),
   declareModule(constants.VUEX, [
     argument2(constants),
     ...strictCommit(constants),

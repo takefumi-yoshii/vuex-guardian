@@ -10,6 +10,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-exports.importByLiteral = function (literal) {
+exports.importDeclaration = function (literal) {
     return ts.createImportDeclaration(undefined, undefined, undefined, ts.createStringLiteral(literal));
 };

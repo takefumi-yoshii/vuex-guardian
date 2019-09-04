@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var importByLiteral_1 = require("../astFactories/importByLiteral");
+var importDeclaration_1 = require("../astFactories/importDeclaration");
 var declareModule_1 = require("../astFactories/declareModule");
 var argument2_1 = require("./argument2");
 var strictCommit_1 = require("./strictCommit");
@@ -12,7 +12,7 @@ var rootContext_1 = require("./rootContext");
 //_______________________________________________________
 //
 exports.createShimsAst = function (fileInfos, constants) { return [
-    importByLiteral_1.importByLiteral(constants.VUEX),
+    importDeclaration_1.importDeclaration(constants.VUEX),
     declareModule_1.declareModule(constants.VUEX, [
         argument2_1.argument2(constants)
     ].concat(strictCommit_1.strictCommit(constants), strictDispatch_1.strictDispatch(constants), [

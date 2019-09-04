@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 import { FileInfo, Constants } from '../types'
-import { importModule } from '../astFactories/importModule'
-import { importByLiteral } from '../astFactories/importByLiteral'
+import { importClause } from '../astFactories/importClause'
+import { importDeclaration } from '../astFactories/importDeclaration'
 import { declareModule } from '../astFactories/declareModule'
 import { createInterfaceForModules } from './createInterfaceForModules'
 import { createInterfaceForLocalState } from './createInterfaceForLocalState'
@@ -15,8 +15,8 @@ export const createModuleAst = (
   fileInfo: FileInfo,
   constants: Constants
 ) => [
-  importModule(fileInfo, constants),
-  importByLiteral(constants.VUEX),
+  importClause(constants.MODULE, fileInfo.importModulePath),
+  importDeclaration(constants.VUEX),
   declareModule(constants.VUEX, [
     createInterfaceForModules(fileInfo, constants),
     createInterfaceForLocalState(fileInfo, constants),

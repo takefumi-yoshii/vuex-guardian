@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var importModule_1 = require("../astFactories/importModule");
-var importByLiteral_1 = require("../astFactories/importByLiteral");
+var importClause_1 = require("../astFactories/importClause");
+var importDeclaration_1 = require("../astFactories/importDeclaration");
 var declareModule_1 = require("../astFactories/declareModule");
 var createInterfaceForModules_1 = require("./createInterfaceForModules");
 var createInterfaceForLocalState_1 = require("./createInterfaceForLocalState");
@@ -11,8 +11,8 @@ var createInterfaceForLocalContext_1 = require("./createInterfaceForLocalContext
 //_______________________________________________________
 //
 exports.createModuleAst = function (sourceFile, fileInfo, constants) { return [
-    importModule_1.importModule(fileInfo, constants),
-    importByLiteral_1.importByLiteral(constants.VUEX),
+    importClause_1.importClause(constants.MODULE, fileInfo.importModulePath),
+    importDeclaration_1.importDeclaration(constants.VUEX),
     declareModule_1.declareModule(constants.VUEX, [
         createInterfaceForModules_1.createInterfaceForModules(fileInfo, constants),
         createInterfaceForLocalState_1.createInterfaceForLocalState(fileInfo, constants),

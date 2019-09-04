@@ -1,7 +1,7 @@
 import * as ts from 'typescript'
 //_______________________________________________________
 //
-export const importByLiteral = (literal: string) =>
+export const importDeclaration = (literal: string) =>
   ts.createImportDeclaration(
     undefined,
     undefined,
