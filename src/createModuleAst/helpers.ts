@@ -2,22 +2,23 @@ import * as ts from 'typescript'
 //_______________________________________________________
 //
 export function isExpectedIdentifierVariableStatement(
-  node: ts.VariableStatement,
   identifier: string
 ) {
-  let res = false
-  node.forEachChild(child => {
-    if (ts.isVariableDeclarationList(child)) {
-      child.forEachChild(child => {
-        if (ts.isVariableDeclaration(child)) {
-          if (ts.isIdentifier(child.name)) {
-            res = child.name.text === identifier
+  return (node: ts.Node) => {
+    let res = false
+    node.forEachChild(child => {
+      if (ts.isVariableDeclarationList(child)) {
+        child.forEachChild(child => {
+          if (ts.isVariableDeclaration(child)) {
+            if (ts.isIdentifier(child.name)) {
+              res = child.name.text === identifier
+            }
           }
-        }
-      })
-    }
-  })
-  return res
+        })
+      }
+    })
+    return res
+  }
 }
 
 export function getVariableDeclarationFromVariableStatement(

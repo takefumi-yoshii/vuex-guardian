@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var createModuleAst_1 = require("../createModuleAst");
-var printNode_1 = require("../printNode");
+var printNode_1 = require("./printNode");
 var emitFile_1 = require("./emitFile");
 //_______________________________________________________
 //

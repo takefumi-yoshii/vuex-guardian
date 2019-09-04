@@ -10,20 +10,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-function isExpectedIdentifierVariableStatement(node, identifier) {
-    var res = false;
-    node.forEachChild(function (child) {
-        if (ts.isVariableDeclarationList(child)) {
-            child.forEachChild(function (child) {
-                if (ts.isVariableDeclaration(child)) {
-                    if (ts.isIdentifier(child.name)) {
-                        res = child.name.text === identifier;
+function isExpectedIdentifierVariableStatement(identifier) {
+    return function (node) {
+        var res = false;
+        node.forEachChild(function (child) {
+            if (ts.isVariableDeclarationList(child)) {
+                child.forEachChild(function (child) {
+                    if (ts.isVariableDeclaration(child)) {
+                        if (ts.isIdentifier(child.name)) {
+                            res = child.name.text === identifier;
+                        }
                     }
-                }
-            });
-        }
-    });
-    return res;
+                });
+            }
+        });
+        return res;
+    };
 }
 exports.isExpectedIdentifierVariableStatement = isExpectedIdentifierVariableStatement;
 function getVariableDeclarationFromVariableStatement(node) {

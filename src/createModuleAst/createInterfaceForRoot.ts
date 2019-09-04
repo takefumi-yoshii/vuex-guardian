@@ -1,5 +1,4 @@
 import * as ts from 'typescript'
-import flatten from 'lodash.flatten'
 import { FileInfo } from '../types'
 import {
   isExpectedIdentifierVariableStatement,
@@ -8,18 +7,25 @@ import {
 } from './helpers'
 //_______________________________________________________
 //
-function getSignature(
+function getStringLiteralIdentifier(
+  fileInfo: FileInfo,
+  identifier: string
+) {
+  if (fileInfo.nameSpace === '') return identifier
+  return `${fileInfo.nameSpace}/${identifier}`
+}
+//_______________________________________________________
+//
+const getSignature = (
   fileInfo: FileInfo,
   identifier: string,
   moduleAliasTypeName: string
-) {
-  const nameSpace =
-    fileInfo.nameSpace === ''
-      ? ''
-      : `${fileInfo.nameSpace}/`
-  return ts.createPropertySignature(
+) =>
+  ts.createPropertySignature(
     undefined,
-    ts.createStringLiteral(`${nameSpace}${identifier}`),
+    ts.createStringLiteral(
+      getStringLiteralIdentifier(fileInfo, identifier)
+    ),
     undefined,
     ts.createIndexedAccessTypeNode(
       ts.createIndexedAccessTypeNode(
@@ -37,50 +43,34 @@ function getSignature(
     ),
     undefined
   )
-}
-function createPropertySignatures(
-  node: ts.VariableDeclaration | null,
-  fileInfo: FileInfo,
-  moduleAliasTypeName: string
-) {
-  const identifiers = getMethodDeclarationNamesFromVariableDeclaration(
-    node
-  )
-  return identifiers.map(identifier =>
-    getSignature(fileInfo, identifier, moduleAliasTypeName)
-  )
-}
-function createPropertySignaturesFromSourceFile(
+//_______________________________________________________
+//
+const createPropertySignaturesFromSourceFile = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   moduleAliasTypeName: string,
   variableDeclarationName: string
-) {
-  const typeDefinitions = sourceFile.getChildAt(0)
-  return flatten(
-    typeDefinitions
-      .getChildren()
-      .filter(ts.isVariableStatement)
-      .filter(node =>
-        isExpectedIdentifierVariableStatement(
-          node,
-          variableDeclarationName
-        )
+) =>
+  sourceFile
+    .getChildAt(0)
+    .getChildren()
+    .filter(ts.isVariableStatement)
+    .filter(
+      isExpectedIdentifierVariableStatement(
+        variableDeclarationName
       )
-      .map(getVariableDeclarationFromVariableStatement)
-      .map(node =>
-        createPropertySignatures(
-          node,
+    )
+    .map(getVariableDeclarationFromVariableStatement)
+    .map(getMethodDeclarationNamesFromVariableDeclaration)
+    .map(identifiers =>
+      identifiers.map(identifier =>
+        getSignature(
           fileInfo,
+          identifier,
           moduleAliasTypeName
         )
       )
-      .filter(
-        (node): node is ts.PropertySignature[] =>
-          node !== undefined
-      )
-  )
-}
+    )[0]
 //_______________________________________________________
 //
 export const createInterfaceForRoot = (
@@ -101,5 +91,5 @@ export const createInterfaceForRoot = (
       fileInfo,
       moduleAliasTypeName,
       variableDeclarationName
-    )!
+    )
   )

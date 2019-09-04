@@ -10,8 +10,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-exports.strictContext = function (constants) { return [
-    ts.createTypeAliasDeclaration(undefined, undefined, ts.createIdentifier(constants.STRICT_CONTEXT), [
+exports.strictContext = function (constants) {
+    return ts.createTypeAliasDeclaration(undefined, undefined, ts.createIdentifier(constants.STRICT_CONTEXT), [
         ts.createTypeParameterDeclaration(ts.createIdentifier('S'), undefined, undefined),
         ts.createTypeParameterDeclaration(ts.createIdentifier('G'), undefined, undefined),
         ts.createTypeParameterDeclaration(ts.createIdentifier('M'), undefined, undefined),
@@ -27,5 +27,5 @@ exports.strictContext = function (constants) { return [
         ts.createPropertySignature(undefined, ts.createIdentifier('dispatch'), undefined, ts.createTypeReferenceNode(ts.createIdentifier(constants.STRICT_DISPATCH), [
             ts.createTypeReferenceNode(ts.createIdentifier('A'), undefined)
         ]), undefined)
-    ]))
-]; };
+    ]));
+};

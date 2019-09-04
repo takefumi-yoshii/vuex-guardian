@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import { Constants } from '../types'
 //_______________________________________________________
 //
-export const strictStore = (constants: Constants) => [
+export const strictStore = (constants: Constants) =>
   ts.createInterfaceDeclaration(
     undefined,
     undefined,
@@ -67,4 +67,3 @@ export const strictStore = (constants: Constants) => [
       )
     ]
   )
-]

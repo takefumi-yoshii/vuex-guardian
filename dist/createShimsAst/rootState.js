@@ -40,6 +40,6 @@ var getIntersectionTypeNode = function (fileInfos, constants) {
 };
 //_______________________________________________________
 //
-exports.rootState = function (fileInfos, constants) { return [
-    ts.createTypeAliasDeclaration(undefined, undefined, ts.createIdentifier(constants.ROOT_STATE), undefined, ts.createIntersectionTypeNode(getIntersectionTypeNode(fileInfos, constants)))
-]; };
+exports.rootState = function (fileInfos, constants) {
+    return ts.createTypeAliasDeclaration(undefined, undefined, ts.createIdentifier(constants.ROOT_STATE), undefined, ts.createIntersectionTypeNode(getIntersectionTypeNode(fileInfos, constants)));
+};

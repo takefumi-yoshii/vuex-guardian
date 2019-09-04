@@ -1,5 +1,4 @@
 import * as ts from 'typescript'
-import flatten from 'lodash.flatten'
 import { FileInfo, Constants } from '../types'
 import {
   isExpectedIdentifierVariableStatement,
@@ -8,14 +7,14 @@ import {
 } from './helpers'
 //_______________________________________________________
 //
-function getSignature(
+const getSignature = (
   fileInfo: FileInfo,
   wrapUtilityTypeName: string,
   variableDeclarationName: string,
   identifier: string,
   constants: Constants
-) {
-  return ts.createPropertySignature(
+) =>
+  ts.createPropertySignature(
     undefined,
     ts.createIdentifier(identifier),
     undefined,
@@ -47,61 +46,37 @@ function getSignature(
     ),
     undefined
   )
-}
-function createPropertySignatures(
-  node: ts.VariableDeclaration | null,
-  fileInfo: FileInfo,
-  wrapUtilityTypeName: string,
-  variableDeclarationName: string,
-  constants: Constants
-) {
-  const identifiers = getMethodDeclarationNamesFromVariableDeclaration(
-    node
-  )
-  return identifiers.map(identifier =>
-    getSignature(
-      fileInfo,
-      wrapUtilityTypeName,
-      variableDeclarationName,
-      identifier,
-      constants
-    )
-  )
-}
-function createPropertySignaturesFromSourceFile(
+//_______________________________________________________
+//
+const createPropertySignaturesFromSourceFile = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   wrapUtilityTypeName: string,
   variableDeclarationName: string,
   constants: Constants
-) {
-  const typeDefinitions = sourceFile.getChildAt(0)
-  return flatten(
-    typeDefinitions
-      .getChildren()
-      .filter(ts.isVariableStatement)
-      .filter(node =>
-        isExpectedIdentifierVariableStatement(
-          node,
-          variableDeclarationName
-        )
+) =>
+  sourceFile
+    .getChildAt(0)
+    .getChildren()
+    .filter(ts.isVariableStatement)
+    .filter(
+      isExpectedIdentifierVariableStatement(
+        variableDeclarationName
       )
-      .map(getVariableDeclarationFromVariableStatement)
-      .map(node =>
-        createPropertySignatures(
-          node,
+    )
+    .map(getVariableDeclarationFromVariableStatement)
+    .map(getMethodDeclarationNamesFromVariableDeclaration)
+    .map(identifiers =>
+      identifiers.map(identifier =>
+        getSignature(
           fileInfo,
           wrapUtilityTypeName,
           variableDeclarationName,
+          identifier,
           constants
         )
       )
-      .filter(
-        (node): node is ts.PropertySignature[] =>
-          node !== undefined
-      )
-  )
-}
+    )[0]
 //_______________________________________________________
 //
 export const createInterfaceForLocal = (

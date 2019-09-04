@@ -6,43 +6,37 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
-var lodash_flatten_1 = __importDefault(require("lodash.flatten"));
 var helpers_1 = require("./helpers");
 //_______________________________________________________
 //
-function getSignature(fileInfo, identifier, moduleAliasTypeName) {
-    var nameSpace = fileInfo.nameSpace === ''
-        ? ''
-        : fileInfo.nameSpace + "/";
-    return ts.createPropertySignature(undefined, ts.createStringLiteral("" + nameSpace + identifier), undefined, ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(moduleAliasTypeName), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier))), undefined);
+function getStringLiteralIdentifier(fileInfo, identifier) {
+    if (fileInfo.nameSpace === '')
+        return identifier;
+    return fileInfo.nameSpace + "/" + identifier;
 }
-function createPropertySignatures(node, fileInfo, moduleAliasTypeName) {
-    var identifiers = helpers_1.getMethodDeclarationNamesFromVariableDeclaration(node);
-    return identifiers.map(function (identifier) {
-        return getSignature(fileInfo, identifier, moduleAliasTypeName);
-    });
-}
-function createPropertySignaturesFromSourceFile(sourceFile, fileInfo, moduleAliasTypeName, variableDeclarationName) {
-    var typeDefinitions = sourceFile.getChildAt(0);
-    return lodash_flatten_1.default(typeDefinitions
+//_______________________________________________________
+//
+var getSignature = function (fileInfo, identifier, moduleAliasTypeName) {
+    return ts.createPropertySignature(undefined, ts.createStringLiteral(getStringLiteralIdentifier(fileInfo, identifier)), undefined, ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(moduleAliasTypeName), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier))), undefined);
+};
+//_______________________________________________________
+//
+var createPropertySignaturesFromSourceFile = function (sourceFile, fileInfo, moduleAliasTypeName, variableDeclarationName) {
+    return sourceFile
+        .getChildAt(0)
         .getChildren()
         .filter(ts.isVariableStatement)
-        .filter(function (node) {
-        return helpers_1.isExpectedIdentifierVariableStatement(node, variableDeclarationName);
-    })
+        .filter(helpers_1.isExpectedIdentifierVariableStatement(variableDeclarationName))
         .map(helpers_1.getVariableDeclarationFromVariableStatement)
-        .map(function (node) {
-        return createPropertySignatures(node, fileInfo, moduleAliasTypeName);
-    })
-        .filter(function (node) {
-        return node !== undefined;
-    }));
-}
+        .map(helpers_1.getMethodDeclarationNamesFromVariableDeclaration)
+        .map(function (identifiers) {
+        return identifiers.map(function (identifier) {
+            return getSignature(fileInfo, identifier, moduleAliasTypeName);
+        });
+    })[0];
+};
 //_______________________________________________________
 //
 exports.createInterfaceForRoot = function (sourceFile, fileInfo, distTypeName, moduleAliasTypeName, variableDeclarationName) {

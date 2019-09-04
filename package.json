@@ -20,13 +20,11 @@
   "dependencies": {
     "commander": "^2.20.0",
     "fs-extra": "^8.1.0",
-    "lodash.flatten": "^4.4.0",
     "typescript": "^3.5.3",
     "watchpack": "^1.6.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.0",
-    "@types/lodash.flatten": "^4.4.6",
     "@types/node": "^12.6.8",
     "@types/watchpack": "^1.1.5",
     "nodemon": "^1.19.1",

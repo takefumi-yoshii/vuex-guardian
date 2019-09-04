@@ -80,7 +80,7 @@ const getIntersectionTypeNode = (
 export const rootState = (
   fileInfos: FileInfo[],
   constants: Constants
-) => [
+) =>
   ts.createTypeAliasDeclaration(
     undefined,
     undefined,
@@ -90,4 +90,3 @@ export const rootState = (
       getIntersectionTypeNode(fileInfos, constants)
     )
   )
-]

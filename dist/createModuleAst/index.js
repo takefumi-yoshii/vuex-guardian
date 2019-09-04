@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var importModule_1 = require("./importModule");
-var importByLiteral_1 = require("./importByLiteral");
-var declareModule_1 = require("./declareModule");
+var importModule_1 = require("../astFactories/importModule");
+var importByLiteral_1 = require("../astFactories/importByLiteral");
+var declareModule_1 = require("../astFactories/declareModule");
 var createInterfaceForModules_1 = require("./createInterfaceForModules");
 var createInterfaceForLocalState_1 = require("./createInterfaceForLocalState");
 var createInterfaceForLocal_1 = require("./createInterfaceForLocal");

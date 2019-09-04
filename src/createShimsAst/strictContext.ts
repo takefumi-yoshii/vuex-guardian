@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import { Constants } from '../types'
 //_______________________________________________________
 //
-export const strictContext = (constants: Constants) => [
+export const strictContext = (constants: Constants) =>
   ts.createTypeAliasDeclaration(
     undefined,
     undefined,
@@ -102,4 +102,3 @@ export const strictContext = (constants: Constants) => [
       )
     ])
   )
-]

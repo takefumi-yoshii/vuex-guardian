@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import { Constants } from '../types'
 //_______________________________________________________
 //
-export const argument2 = (constants: Constants) => [
+export const argument2 = (constants: Constants) =>
   ts.createTypeAliasDeclaration(
     undefined,
     undefined,
@@ -58,4 +58,3 @@ export const argument2 = (constants: Constants) => [
       ts.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword)
     )
   )
-]

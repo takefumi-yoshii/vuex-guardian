@@ -1,5 +1,6 @@
-import * as ts from 'typescript'
 import { Constants, FileInfo } from '../types'
+import { importByLiteral } from '../astFactories/importByLiteral'
+import { declareModule } from '../astFactories/declareModule'
 import { argument2 } from './argument2'
 import { strictCommit } from './strictCommit'
 import { strictDispatch } from './strictDispatch'
@@ -13,24 +14,14 @@ export const createShimsAst = (
   fileInfos: FileInfo[],
   constants: Constants
 ) => [
-  ts.createImportDeclaration(
-    undefined,
-    undefined,
-    undefined,
-    ts.createStringLiteral(constants.VUEX)
-  ),
-  ts.createModuleDeclaration(
-    undefined,
-    [ts.createModifier(ts.SyntaxKind.DeclareKeyword)],
-    ts.createStringLiteral(constants.VUEX),
-    ts.createModuleBlock([
-      ...argument2(constants),
-      ...strictCommit(constants),
-      ...strictDispatch(constants),
-      ...strictContext(constants),
-      ...strictStore(constants),
-      ...rootState(fileInfos, constants),
-      ...rootContext(constants)
-    ])
-  )
+  importByLiteral(constants.VUEX),
+  declareModule(constants.VUEX, [
+    argument2(constants),
+    ...strictCommit(constants),
+    ...strictDispatch(constants),
+    strictContext(constants),
+    strictStore(constants),
+    rootState(fileInfos, constants),
+    rootContext(constants)
+  ])
 ]
