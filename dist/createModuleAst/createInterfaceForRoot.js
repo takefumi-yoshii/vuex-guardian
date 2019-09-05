@@ -18,7 +18,7 @@ function getStringLiteralIdentifier(fileInfo, identifier) {
 }
 //_______________________________________________________
 //
-var getSignature = function (fileInfo, identifier, moduleAliasTypeName) {
+var getTypeReferenceNode = function (fileInfo, identifier, moduleAliasTypeName) {
     return ts.createPropertySignature(undefined, ts.createStringLiteral(getStringLiteralIdentifier(fileInfo, identifier)), undefined, ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(moduleAliasTypeName), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier))), undefined);
 };
 //_______________________________________________________
@@ -33,7 +33,7 @@ var createPropertySignaturesFromSourceFile = function (sourceFile, fileInfo, mod
         .map(helpers_1.getMethodDeclarationNamesFromVariableDeclaration)
         .map(function (identifiers) {
         return identifiers.map(function (identifier) {
-            return getSignature(fileInfo, identifier, moduleAliasTypeName);
+            return getTypeReferenceNode(fileInfo, identifier, moduleAliasTypeName);
         });
     })[0];
 };

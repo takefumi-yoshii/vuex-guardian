@@ -11,7 +11,7 @@ var ts = __importStar(require("typescript"));
 var helpers_1 = require("./helpers");
 //_______________________________________________________
 //
-var getSignature = function (fileInfo, wrapUtilityTypeName, variableDeclarationName, identifier, constants) {
+var getPropertySignature = function (fileInfo, wrapUtilityTypeName, variableDeclarationName, identifier, constants) {
     return ts.createPropertySignature(undefined, ts.createIdentifier(identifier), undefined, ts.createTypeReferenceNode(ts.createIdentifier(wrapUtilityTypeName), [
         ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.MODULES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(variableDeclarationName))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier)))
     ]), undefined);
@@ -28,7 +28,7 @@ var createPropertySignaturesFromSourceFile = function (sourceFile, fileInfo, wra
         .map(helpers_1.getMethodDeclarationNamesFromVariableDeclaration)
         .map(function (identifiers) {
         return identifiers.map(function (identifier) {
-            return getSignature(fileInfo, wrapUtilityTypeName, variableDeclarationName, identifier, constants);
+            return getPropertySignature(fileInfo, wrapUtilityTypeName, variableDeclarationName, identifier, constants);
         });
     })[0];
 };

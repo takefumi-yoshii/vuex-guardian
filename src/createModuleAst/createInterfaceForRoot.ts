@@ -16,7 +16,7 @@ function getStringLiteralIdentifier(
 }
 //_______________________________________________________
 //
-const getSignature = (
+const getTypeReferenceNode = (
   fileInfo: FileInfo,
   identifier: string,
   moduleAliasTypeName: string
@@ -64,7 +64,7 @@ const createPropertySignaturesFromSourceFile = (
     .map(getMethodDeclarationNamesFromVariableDeclaration)
     .map(identifiers =>
       identifiers.map(identifier =>
-        getSignature(
+        getTypeReferenceNode(
           fileInfo,
           identifier,
           moduleAliasTypeName

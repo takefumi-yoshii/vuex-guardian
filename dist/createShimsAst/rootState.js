@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-var getSignature = function (fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
+var getTypeReferenceNode = function (fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
     return ts.createTypeReferenceNode(ts.createIdentifier(wrapUtilityTypeName), [
         ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.MODULES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(variableDeclarationName)))
     ]);
@@ -22,7 +22,7 @@ var getIntersectionTypeNode = function (fileInfos, constants) {
         var current = 0;
         if (!fileInfo.fileTreeKeys[current]) {
             // for Root Module
-            return getSignature(fileInfo, constants.RETURN_TYPE, constants.STATE, constants);
+            return getTypeReferenceNode(fileInfo, constants.RETURN_TYPE, constants.STATE, constants);
         }
         var visit = function () {
             if (fileInfo.fileTreeKeys[current + 1]) {
@@ -32,7 +32,7 @@ var getIntersectionTypeNode = function (fileInfos, constants) {
             }
             else {
                 // for Signature Node
-                return ts.createPropertySignature(undefined, ts.createIdentifier(fileInfo.fileTreeKeys[current]), undefined, getSignature(fileInfo, constants.RETURN_TYPE, constants.STATE, constants), undefined);
+                return ts.createPropertySignature(undefined, ts.createIdentifier(fileInfo.fileTreeKeys[current]), undefined, getTypeReferenceNode(fileInfo, constants.RETURN_TYPE, constants.STATE, constants), undefined);
             }
         };
         return ts.createTypeLiteralNode([visit()]);

@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import { FileInfo, Constants } from '../types'
 //_______________________________________________________
 //
-const getSignature = (
+const getTypeReferenceNode = (
   fileInfo: FileInfo,
   wrapUtilityTypeName: string,
   variableDeclarationName: string,
@@ -37,7 +37,7 @@ const getIntersectionTypeNode = (
     let current = 0
     if (!fileInfo.fileTreeKeys[current]) {
       // for Root Module
-      return getSignature(
+      return getTypeReferenceNode(
         fileInfo,
         constants.RETURN_TYPE,
         constants.STATE,
@@ -65,7 +65,7 @@ const getIntersectionTypeNode = (
             fileInfo.fileTreeKeys[current]
           ),
           undefined,
-          getSignature(
+          getTypeReferenceNode(
             fileInfo,
             constants.RETURN_TYPE,
             constants.STATE,

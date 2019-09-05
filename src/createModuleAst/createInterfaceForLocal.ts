@@ -7,7 +7,7 @@ import {
 } from './helpers'
 //_______________________________________________________
 //
-const getSignature = (
+const getPropertySignature = (
   fileInfo: FileInfo,
   wrapUtilityTypeName: string,
   variableDeclarationName: string,
@@ -68,7 +68,7 @@ const createPropertySignaturesFromSourceFile = (
     .map(getMethodDeclarationNamesFromVariableDeclaration)
     .map(identifiers =>
       identifiers.map(identifier =>
-        getSignature(
+        getPropertySignature(
           fileInfo,
           wrapUtilityTypeName,
           variableDeclarationName,
