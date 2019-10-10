@@ -49,7 +49,7 @@ var modulesTypesConstants = {
     MUTATION_TYPES: 'MutationTypes',
     ACTION_TYPES: 'ActionTypes'
 };
-exports.constants = __assign({}, dependenciesConstants, utilityTypesConstants, shimsTypesConstants, modulesTypesConstants);
+exports.constants = __assign(__assign(__assign(__assign({}, dependenciesConstants), utilityTypesConstants), shimsTypesConstants), modulesTypesConstants);
 //_______________________________________________________
 //
 exports.config = {

@@ -10,8 +10,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ts = __importStar(require("typescript"));
 //_______________________________________________________
 //
-var getTypeReferenceNode = function (fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
-    return ts.createTypeReferenceNode(ts.createIdentifier(wrapUtilityTypeName), [
+var getTypeReferenceNode = function (fileInfo, utilityTypeName, variableDeclarationName, constants) {
+    return ts.createTypeReferenceNode(ts.createIdentifier(utilityTypeName), [
         ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.MODULES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(variableDeclarationName)))
     ]);
 };

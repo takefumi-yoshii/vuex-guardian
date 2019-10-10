@@ -4,12 +4,12 @@ import { FileInfo, Constants } from '../types'
 //
 const getTypeReferenceNode = (
   fileInfo: FileInfo,
-  wrapUtilityTypeName: string,
+  utilityTypeName: string,
   variableDeclarationName: string,
   constants: Constants
 ) =>
   ts.createTypeReferenceNode(
-    ts.createIdentifier(wrapUtilityTypeName),
+    ts.createIdentifier(utilityTypeName),
     [
       ts.createIndexedAccessTypeNode(
         ts.createIndexedAccessTypeNode(

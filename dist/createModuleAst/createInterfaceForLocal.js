@@ -11,31 +11,31 @@ var ts = __importStar(require("typescript"));
 var helpers_1 = require("./helpers");
 //_______________________________________________________
 //
-var getPropertySignature = function (fileInfo, wrapUtilityTypeName, variableDeclarationName, identifier, constants) {
-    return ts.createPropertySignature(undefined, ts.createIdentifier(identifier), undefined, ts.createTypeReferenceNode(ts.createIdentifier(wrapUtilityTypeName), [
+var getPropertySignature = function (fileInfo, utilityTypeName, variableDeclarationName, identifier, constants) {
+    return ts.createPropertySignature(undefined, ts.createIdentifier(identifier), undefined, ts.createTypeReferenceNode(ts.createIdentifier(utilityTypeName), [
         ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(constants.MODULES), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(variableDeclarationName))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier)))
     ]), undefined);
 };
 //_______________________________________________________
 //
-var createPropertySignaturesFromSourceFile = function (sourceFile, fileInfo, wrapUtilityTypeName, variableDeclarationName, constants) {
+var getPropertySignaturesFromSourceFile = function (sourceFile, fileInfo, utilityTypeName, variableDeclarationName, constants) {
     return sourceFile
         .getChildAt(0)
         .getChildren()
         .filter(ts.isVariableStatement)
         .filter(helpers_1.isExpectedIdentifierVariableStatement(variableDeclarationName))
         .map(helpers_1.getVariableDeclarationFromVariableStatement)
-        .map(helpers_1.getMethodDeclarationNamesFromVariableDeclaration)
+        .map(helpers_1.getMethodNamesFromVariableDeclaration)
         .map(function (identifiers) {
         return identifiers.map(function (identifier) {
-            return getPropertySignature(fileInfo, wrapUtilityTypeName, variableDeclarationName, identifier, constants);
+            return getPropertySignature(fileInfo, utilityTypeName, variableDeclarationName, identifier, constants);
         });
     })[0];
 };
 //_______________________________________________________
 //
-exports.createInterfaceForLocal = function (sourceFile, fileInfo, distTypeName, wrapUtilityTypeName, variableDeclarationName, constants) {
+exports.createInterfaceForLocal = function (sourceFile, fileInfo, distTypeName, utilityTypeName, variableDeclarationName, constants) {
     return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, [
-        ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.nameSpace), undefined, ts.createTypeLiteralNode(createPropertySignaturesFromSourceFile(sourceFile, fileInfo, wrapUtilityTypeName, variableDeclarationName, constants)), undefined)
+        ts.createPropertySignature(undefined, ts.createStringLiteral(fileInfo.nameSpace), undefined, ts.createTypeLiteralNode(getPropertySignaturesFromSourceFile(sourceFile, fileInfo, utilityTypeName, variableDeclarationName, constants)), undefined)
     ]);
 };

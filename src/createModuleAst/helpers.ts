@@ -37,7 +37,7 @@ export function getVariableDeclarationFromVariableStatement(
   return decl
 }
 
-export function getMethodDeclarationNamesFromVariableDeclaration(
+export function getMethodNamesFromVariableDeclaration(
   node: ts.VariableDeclaration | null
 ) {
   const names: string[] = []

@@ -42,7 +42,7 @@ function getVariableDeclarationFromVariableStatement(node) {
     return decl;
 }
 exports.getVariableDeclarationFromVariableStatement = getVariableDeclarationFromVariableStatement;
-function getMethodDeclarationNamesFromVariableDeclaration(node) {
+function getMethodNamesFromVariableDeclaration(node) {
     var names = [];
     if (!node)
         return names;
@@ -61,4 +61,4 @@ function getMethodDeclarationNamesFromVariableDeclaration(node) {
     });
     return names;
 }
-exports.getMethodDeclarationNamesFromVariableDeclaration = getMethodDeclarationNamesFromVariableDeclaration;
+exports.getMethodNamesFromVariableDeclaration = getMethodNamesFromVariableDeclaration;

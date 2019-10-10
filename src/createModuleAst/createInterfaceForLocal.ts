@@ -3,13 +3,13 @@ import { FileInfo, Constants } from '../types'
 import {
   isExpectedIdentifierVariableStatement,
   getVariableDeclarationFromVariableStatement,
-  getMethodDeclarationNamesFromVariableDeclaration
+  getMethodNamesFromVariableDeclaration
 } from './helpers'
 //_______________________________________________________
 //
 const getPropertySignature = (
   fileInfo: FileInfo,
-  wrapUtilityTypeName: string,
+  utilityTypeName: string,
   variableDeclarationName: string,
   identifier: string,
   constants: Constants
@@ -19,7 +19,7 @@ const getPropertySignature = (
     ts.createIdentifier(identifier),
     undefined,
     ts.createTypeReferenceNode(
-      ts.createIdentifier(wrapUtilityTypeName),
+      ts.createIdentifier(utilityTypeName),
       [
         ts.createIndexedAccessTypeNode(
           ts.createIndexedAccessTypeNode(
@@ -48,10 +48,10 @@ const getPropertySignature = (
   )
 //_______________________________________________________
 //
-const createPropertySignaturesFromSourceFile = (
+const getPropertySignaturesFromSourceFile = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
-  wrapUtilityTypeName: string,
+  utilityTypeName: string,
   variableDeclarationName: string,
   constants: Constants
 ) =>
@@ -65,12 +65,12 @@ const createPropertySignaturesFromSourceFile = (
       )
     )
     .map(getVariableDeclarationFromVariableStatement)
-    .map(getMethodDeclarationNamesFromVariableDeclaration)
+    .map(getMethodNamesFromVariableDeclaration)
     .map(identifiers =>
       identifiers.map(identifier =>
         getPropertySignature(
           fileInfo,
-          wrapUtilityTypeName,
+          utilityTypeName,
           variableDeclarationName,
           identifier,
           constants
@@ -83,7 +83,7 @@ export const createInterfaceForLocal = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   distTypeName: string,
-  wrapUtilityTypeName: string,
+  utilityTypeName: string,
   variableDeclarationName: string,
   constants: Constants
 ) =>
@@ -99,10 +99,10 @@ export const createInterfaceForLocal = (
         ts.createStringLiteral(fileInfo.nameSpace),
         undefined,
         ts.createTypeLiteralNode(
-          createPropertySignaturesFromSourceFile(
+          getPropertySignaturesFromSourceFile(
             sourceFile,
             fileInfo,
-            wrapUtilityTypeName,
+            utilityTypeName,
             variableDeclarationName,
             constants
           )

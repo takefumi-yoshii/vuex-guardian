@@ -18,27 +18,27 @@ function getStringLiteralIdentifier(fileInfo, identifier) {
 }
 //_______________________________________________________
 //
-var getTypeReferenceNode = function (fileInfo, identifier, moduleAliasTypeName) {
-    return ts.createPropertySignature(undefined, ts.createStringLiteral(getStringLiteralIdentifier(fileInfo, identifier)), undefined, ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(moduleAliasTypeName), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier))), undefined);
+var getPropertySignature = function (fileInfo, identifier, aliasTypeName) {
+    return ts.createPropertySignature(undefined, ts.createStringLiteral(getStringLiteralIdentifier(fileInfo, identifier)), undefined, ts.createIndexedAccessTypeNode(ts.createIndexedAccessTypeNode(ts.createTypeReferenceNode(ts.createIdentifier(aliasTypeName), undefined), ts.createLiteralTypeNode(ts.createStringLiteral(fileInfo.nameSpace))), ts.createLiteralTypeNode(ts.createStringLiteral(identifier))), undefined);
 };
 //_______________________________________________________
 //
-var createPropertySignaturesFromSourceFile = function (sourceFile, fileInfo, moduleAliasTypeName, variableDeclarationName) {
+var getPropertySignaturesFromSourceFile = function (sourceFile, fileInfo, aliasTypeName, variableDeclarationName) {
     return sourceFile
         .getChildAt(0)
         .getChildren()
         .filter(ts.isVariableStatement)
         .filter(helpers_1.isExpectedIdentifierVariableStatement(variableDeclarationName))
         .map(helpers_1.getVariableDeclarationFromVariableStatement)
-        .map(helpers_1.getMethodDeclarationNamesFromVariableDeclaration)
+        .map(helpers_1.getMethodNamesFromVariableDeclaration)
         .map(function (identifiers) {
         return identifiers.map(function (identifier) {
-            return getTypeReferenceNode(fileInfo, identifier, moduleAliasTypeName);
+            return getPropertySignature(fileInfo, identifier, aliasTypeName);
         });
     })[0];
 };
 //_______________________________________________________
 //
-exports.createInterfaceForRoot = function (sourceFile, fileInfo, distTypeName, moduleAliasTypeName, variableDeclarationName) {
-    return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, createPropertySignaturesFromSourceFile(sourceFile, fileInfo, moduleAliasTypeName, variableDeclarationName));
+exports.createInterfaceForRoot = function (sourceFile, fileInfo, distTypeName, aliasTypeName, variableDeclarationName) {
+    return ts.createInterfaceDeclaration(undefined, undefined, ts.createIdentifier(distTypeName), undefined, undefined, getPropertySignaturesFromSourceFile(sourceFile, fileInfo, aliasTypeName, variableDeclarationName));
 };

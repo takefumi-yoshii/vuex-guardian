@@ -31,7 +31,7 @@ var emitFiles_1 = require("./emitFiles");
 function run(config) {
     var storeDir = path.resolve(config.storeDir);
     var distDir = path.resolve(config.distDir);
-    var constants = __assign({}, config_1.config.constants, config.constants);
+    var constants = __assign(__assign({}, config_1.config.constants), config.constants);
     fs.removeSync(distDir);
     function onChange(filePath) {
         if (!fs.existsSync(filePath)) {

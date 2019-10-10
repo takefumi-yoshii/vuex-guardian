@@ -3,7 +3,7 @@ import { FileInfo } from '../types'
 import {
   isExpectedIdentifierVariableStatement,
   getVariableDeclarationFromVariableStatement,
-  getMethodDeclarationNamesFromVariableDeclaration
+  getMethodNamesFromVariableDeclaration
 } from './helpers'
 //_______________________________________________________
 //
@@ -16,10 +16,10 @@ function getStringLiteralIdentifier(
 }
 //_______________________________________________________
 //
-const getTypeReferenceNode = (
+const getPropertySignature = (
   fileInfo: FileInfo,
   identifier: string,
-  moduleAliasTypeName: string
+  aliasTypeName: string
 ) =>
   ts.createPropertySignature(
     undefined,
@@ -30,7 +30,7 @@ const getTypeReferenceNode = (
     ts.createIndexedAccessTypeNode(
       ts.createIndexedAccessTypeNode(
         ts.createTypeReferenceNode(
-          ts.createIdentifier(moduleAliasTypeName),
+          ts.createIdentifier(aliasTypeName),
           undefined
         ),
         ts.createLiteralTypeNode(
@@ -45,10 +45,10 @@ const getTypeReferenceNode = (
   )
 //_______________________________________________________
 //
-const createPropertySignaturesFromSourceFile = (
+const getPropertySignaturesFromSourceFile = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
-  moduleAliasTypeName: string,
+  aliasTypeName: string,
   variableDeclarationName: string
 ) =>
   sourceFile
@@ -61,13 +61,13 @@ const createPropertySignaturesFromSourceFile = (
       )
     )
     .map(getVariableDeclarationFromVariableStatement)
-    .map(getMethodDeclarationNamesFromVariableDeclaration)
+    .map(getMethodNamesFromVariableDeclaration)
     .map(identifiers =>
       identifiers.map(identifier =>
-        getTypeReferenceNode(
+        getPropertySignature(
           fileInfo,
           identifier,
-          moduleAliasTypeName
+          aliasTypeName
         )
       )
     )[0]
@@ -77,7 +77,7 @@ export const createInterfaceForRoot = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   distTypeName: string,
-  moduleAliasTypeName: string,
+  aliasTypeName: string,
   variableDeclarationName: string
 ) =>
   ts.createInterfaceDeclaration(
@@ -86,10 +86,10 @@ export const createInterfaceForRoot = (
     ts.createIdentifier(distTypeName),
     undefined,
     undefined,
-    createPropertySignaturesFromSourceFile(
+    getPropertySignaturesFromSourceFile(
       sourceFile,
       fileInfo,
-      moduleAliasTypeName,
+      aliasTypeName,
       variableDeclarationName
     )
   )
