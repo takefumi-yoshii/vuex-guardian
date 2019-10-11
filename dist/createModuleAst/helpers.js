@@ -51,7 +51,7 @@ function getMethodNamesFromVariableDeclaration(node) {
     node.forEachChild(function (child) {
         if (ts.isObjectLiteralExpression(child)) {
             child.forEachChild(function (child) {
-                if (ts.isMethodDeclaration(child)) {
+                if (ts.isMethodDeclaration(child) || ts.isPropertyAssignment(child)) {
                     if (ts.isIdentifier(child.name)) {
                         names.push(child.name.text);
                     }
