@@ -1,4 +1,5 @@
 import * as ts from 'typescript'
+import * as path from 'path'
 import { FileInfo, Constants } from '../types'
 import { importClause } from '../astFactories/importClause'
 import { importDeclaration } from '../astFactories/importDeclaration'
@@ -10,12 +11,14 @@ import { createInterfaceForRoot } from './createInterfaceForRoot'
 import { createInterfaceForLocalContext } from './createInterfaceForLocalContext'
 //_______________________________________________________
 //
+const makeRelativePath = (info: FileInfo) => path.relative(info.distDir, info.fileImportPath)
+
 export const createModuleAst = (
   sourceFile: ts.SourceFile,
   fileInfo: FileInfo,
   constants: Constants
 ) => [
-  importClause(constants.MODULE, fileInfo.fileImportPath),
+  importClause(constants.MODULE, makeRelativePath(fileInfo)),
   importDeclaration(constants.VUEX),
   declareModule(constants.VUEX, [
     createInterfaceForModules(fileInfo, constants),

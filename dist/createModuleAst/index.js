@@ -1,5 +1,13 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var path = __importStar(require("path"));
 var importClause_1 = require("../astFactories/importClause");
 var importDeclaration_1 = require("../astFactories/importDeclaration");
 var declareModule_1 = require("../astFactories/declareModule");
@@ -10,8 +18,9 @@ var createInterfaceForRoot_1 = require("./createInterfaceForRoot");
 var createInterfaceForLocalContext_1 = require("./createInterfaceForLocalContext");
 //_______________________________________________________
 //
+var makeRelativePath = function (info) { return path.relative(info.distDir, info.filePath); };
 exports.createModuleAst = function (sourceFile, fileInfo, constants) { return [
-    importClause_1.importClause(constants.MODULE, fileInfo.fileImportPath),
+    importClause_1.importClause(constants.MODULE, makeRelativePath(fileInfo)),
     importDeclaration_1.importDeclaration(constants.VUEX),
     declareModule_1.declareModule(constants.VUEX, [
         createInterfaceForModules_1.createInterfaceForModules(fileInfo, constants),
