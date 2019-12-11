@@ -28,8 +28,10 @@ let config
 try {
   const configFileName =
     program.config || 'vuex-guardian.config.js'
-  const configFilePath = path.resolve(configFileName)
-  config = require(configFilePath)
+  config = {
+    ...require('../dist/config').config,
+    ...require(path.resolve(configFileName))
+  }
 } catch {
   config = require('../dist/config').config
 } finally {
