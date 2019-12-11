@@ -14,7 +14,7 @@ And the usage environment assumes "Module Mode of Nuxt.js".
 All you need to do is download this package with npm and start the process.
 This process monitors the Store directory and generate "Reference Types" to the Vuex Modules defined there.
 ```
-$ yarn install -D vuex-guardian
+$ yarn add -D vuex-guardian
 $ vuex-guardian
 ```
 
