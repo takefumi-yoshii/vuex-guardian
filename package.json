@@ -20,7 +20,7 @@
   "dependencies": {
     "commander": "^2.20.0",
     "fs-extra": "^8.1.0",
-    "typescript": "^3.5.3",
+    "typescript": "^3.7.3",
     "watchpack": "^1.6.0"
   },
   "devDependencies": {
