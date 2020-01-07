@@ -3,7 +3,7 @@ import * as ts from 'typescript'
 //
 export const declareModule = (
   moduleName: string,
-  statements: (ts.Statement)[]
+  statements: ts.Statement[]
 ) =>
   ts.createModuleDeclaration(
     undefined,
