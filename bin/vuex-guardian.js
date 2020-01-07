@@ -36,7 +36,21 @@ try {
   config = require('../dist/config').config
 } finally {
   require('../dist').run({
-    build: program.build,
-    ...config
+    ...config,
+    ...(typeof program.storeDir === 'string'
+      ? {
+          storeDir: program.storeDir
+        }
+      : {}),
+    ...(typeof program.distDir === 'string'
+      ? {
+          distDir: program.distDir
+        }
+      : {}),
+    ...(program.build !== undefined
+      ? {
+          build: program.build
+        }
+      : {})
   })
 }
